@@ -1,0 +1,45 @@
+{% load static %}
+{% load tougshire_extras %}
+
+
+<div id=div_home class="page">
+	<div class="sectionCore">
+
+		{% include './_detail_1field.html' with field=object.name label='Name' %}
+		{% include './_detail_1field.html' with field=object.email label='Email' %}
+		{% include './_detail_1field.html' with field=object.phone label='Phone' %}
+		{% include './_detail_1field.html' with field=object.additional_contact label='Additional Contact Information' %}
+		<input type="hidden" id="id_is_type_builder" value="{{ object.is_type_builder }}">
+		<input type="hidden" id="id_is_type_remodeler" value="{{ object.is_type_remodeler }}">
+		<input type="hidden" id="id_is_type_homeowner" value="{{ object.is_type_homeowner }}">
+		<div class="detailFieldWrapper">
+				<div class="detailFieldLabel">
+						Type
+				</div>
+				<div class="detailFieldWidget">
+						<div id="typeDisplay"></div> 
+				</div>
+		</div>
+		{% include './_detail_1field.html' with field=object.billing_address label='Billing Address' %}
+		{% include './_detail_1field.html' with field=object.archived label='Archived' %}
+	</div>
+</div>
+
+	<script>
+
+type_names=[];
+type_names[0]={"name":"builder","label":"Builder"};
+type_names[1]={"name":"remodeler","label":"Remodeler"};
+type_names[2]={"name":"homeowner","label":"Homeowner"};
+
+var typeDisplay=document.getElementById("typeDisplay");
+typeDisplay.innerHTML="";
+for (p=0; p<type_names.length; p++) {
+	if(document.getElementById('id_is_type_' + type_names[p].name).value=="Y") {
+		if(typeDisplay.innerHTML > "") {
+			typeDisplay.innerHTML = typeDisplay.innerHTML + ", ";
+		}
+		typeDisplay.innerHTML = typeDisplay.innerHTML + type_names[p].label;
+	}
+}
+	</script>

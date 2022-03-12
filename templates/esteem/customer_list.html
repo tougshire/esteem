@@ -1,0 +1,145 @@
+{% extends './_base.html' %}
+{% load static %}
+{% load esteem_extras %}
+{% block objectheader %}
+<div class="objectTitle"><h2>Customers</h2></div>
+{% endblock %}
+{% block objectmenu %} 
+    {% include './customer_menu.html' with thisview='list' %}
+{% endblock %}
+{% block content %}
+    {% comment %}
+    <div id="div_query">
+        <div id="div_recall_query">
+            <form id="frm_recall_query">
+                <div class="fieldWrapper">
+                    <div class="queryFieldLabel">
+                        {{ recall_estirequest_query_form.recall_estirequest_query.label_tag }}
+                    </div>
+                    <div class="queryFieldWidget">
+                        {{ recall_estirequest_query_form.recall_estirequest_query }}
+                    </div>
+                    <div class="queryFieldOperator">
+                        <button>Recall</button> 
+                    </div>
+
+                    <div class="queryFieldLabel">
+                        {{ recall_estirequest_query_form.delete_estirequest_query.label_tag }}
+                    </div>
+                    <div class="queryFieldCheck">
+                        {{ recall_estirequest_query_form.delete_estirequest_query }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="div_query">
+            <form id="frm_query">
+                <button type="submit">Submit Query</button>
+                <h2>Filter</h2>
+                <div id="div_filter_fields" class="filter_fields">
+                    <div class="fieldWrapper">
+                        <div class="queryFieldLabel">
+                            <label for="chk_filter_use_clear">Clear All Use Boxes</label>
+                        </div>
+                        <div class="queryFieldCheck">
+                            <input type="checkbox" id="chk_filter_use_clear">
+                        </div>
+                        <div class="queryFieldLabel">
+                            &nbsp;
+                        </div>
+                    </div>
+                    {% include 'ervin/_filter_field.html' with queryfield_value=estirequest_query_form.name_value  queryfield_use=estirequest_query_form.name_use queryfield_operator=estirequest_query_form.name_operator %}
+                </div>
+                <h2>Order</h2>
+                <div id="div_orderby_fields" class="orderby_fields">
+                    <div class="queryFieldLabel">
+                        {{ estirequest_query_form.orderby1.label_tag }}
+                    </div>
+                    <div class="queryFieldWidget">
+                        {{ estirequest_query_form.orderby1 }}
+                    </div>
+                    <div class="queryFieldWidget">
+                        {{ estirequest_query_form.orderby2 }}
+                    </div>
+                    <div class="queryFieldWidget">
+                        {{ estirequest_query_form.orderby3 }}
+                    </div>
+                </div>
+                <h2>Paginate</h2>
+                <div id="div_paginate" class="paginate_fields">
+                    <div class="queryFieldLabel">
+                        {{ estirequest_query_form.paginate_by.label_tag }}
+                    </div>
+                    <div class="queryFormWidget">
+                        {{ estirequest_query_form.paginate_by }}
+                    </div>
+                </div>
+                <div id="div_save_query">
+                    <div class="fieldWrapper">
+                        <div class="queryFieldLabel">
+                            {{ estirequest_query_form.do_save.label_tag }}
+                        </div>
+                        <div class="queryFieldCheck">
+                            {{ estirequest_query_form.do_save }}
+                        </div>
+                        <div class="queryFieldLabel">
+                            {{ estirequest_query_form.query_name.label_tag }}
+                        </div>
+                        <div class="queryFieldWidget">
+                            {{ estirequest_query_form.query_name }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    {{ estirequest_query.query_display }}
+    {% if filter_display %}
+    <div>
+        Filtered: {{ filter_display }}
+    </div>
+    {% endif %}
+    {% endcomment %}                    
+    {% if object_list %}
+    <div class="objectList">
+        <div class="listTabularRow">
+            <div class="label span4">name</div>
+            <div class="label span4">email</div>
+            <div class="label span4">phone</div>
+        </div>
+        {% for object in object_list %}
+            {% can_view_in_list object request.user as can_view_in_list %}
+            {% if can_view_in_list  %}
+                <div class="listTabularRow">
+                    <div class='cell span4'>
+                        {% if perms.esteem.view_customer %}
+                            <a href="{% url 'customer_detail' object.id %}">{{ object.name }}&nbsp;</a>
+                        {% else %}
+                            {{ object.name }}
+                        {% endif %}
+                    </div>
+                    <div class='cell span4'>
+                        {% if object.email > '' %}
+                        <a href="mailto:{{ object.email }}">{{ object.email }}</a>
+                        {% endif %}
+                    </div>
+                    <div class='cell span4'>
+                        {{ object.phone }}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+{% comment %} <script src="{% static 'ervin/queryform.js' %}"></script> {% endcomment %}
+<script type="text/javascript">
+</script>
+{% endblock %}
+
+{% comment %}
+vim: ai et sts=4 ts=4 sw=4
+{% endcomment %}

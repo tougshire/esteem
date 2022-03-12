@@ -1,0 +1,13 @@
+{% extends './_base.html' %}
+{% load static %}
+{% block objectheader %}
+<div class="objectTitle"><h2>Proposal - Create</h2></div>
+{% endblock %}
+{% block objectmenu %}
+  {% include './proposal_menu.html' with thisview='create' %}
+{% endblock %}
+{% block content %}
+{% include './proposal_form_include.html' %}
+{% endblock %}
+
+

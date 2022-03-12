@@ -1,0 +1,10 @@
+<div class="detailFieldWrapper">
+    <div class="detailFieldLabel">
+			Assigned To	
+    </div>
+    <div class="detailFieldWidget">
+      {% for assignment in object_list %} 
+			<div>{{ assignment.salesperson.name }}</div>
+      {% endfor %}
+    </div>
+</div>

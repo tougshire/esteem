@@ -1,0 +1,46 @@
+<div class="menubar">
+  {% if thisview == "list" %}
+  {% else %}
+    <div class="menuitem">
+      <a href="{% url 'customer_list' %}">List</a>
+    </div>
+  {% endif %}
+  {% if perms.esteem.add_customer %}
+    {% if thisview == "create" %}
+    {% else %}
+      <div class="menuitem">
+        <a href="{% url 'customer_create' %}">Create</a>
+      </div>
+    {% endif %}
+  {% endif %}
+  {% if perms.esteem.view_customer %}
+    {% if thisview == "detail" %}
+    {% else %}
+      {% if object.pk %}
+        <div class="menuitem">
+          <a href="{% url 'customer_detail' object.pk %}">Detail</a>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if perms.esteem.change_customer %}
+    {% if thisview == "update" %}
+    {% else %}
+      {% if object.pk %}
+			<div class="menuitem">
+				<a href="{% url 'customer_update' object.pk %}">Edit</a>
+			</div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if perms.esteem.delete_customer %}
+    {% if thisview == "delete" %}
+    {% else %}
+      {% if object.pk %}
+        <div class="menuitem">
+          <a href="{% url 'customer_delete' object.pk %}">Delete</a>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+</div>

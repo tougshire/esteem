@@ -1,0 +1,75 @@
+{% load static %}
+
+<form name="form" id="form" method="post" enctype="multipart/form-data"  >
+	{{ form.media }}
+	{% csrf_token %}
+	<div class="main">
+		{% if messages %}
+			<!-- Messaging -->
+			<div id="messages">
+				<div class="inner">
+					<ul>
+						{% for message in messages %}
+							<li>{{ message }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<!-- /Messaging -->
+		{% endif %}
+		{% if form.errors %}
+			<!-- Error messaging -->
+			<div id="errors">
+				<div class="inner">
+					<p>There were some errors in the information you entered. Please correct the following:</p>
+					{{ form.non_field_errors }}
+					<ul>
+						{% for field in form %}
+							{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<!-- /Error messaging -->
+		{% endif %}
+		<div id="div_home" class="page">
+			<div class="sectionRequestnum">
+				{% include './_form_fields.html' with field=form.estirequest %}
+			</div>
+			<div class="sectionCore">
+				{% include './_form_fields.html' with field=form.create_date %}
+				{% include './_form_fields.html' with field=form.component %}
+				{% include './_form_fields.html' with field=form.estimator %}
+				{% include './_form_fields.html' with field=form.amount %}
+				{% include './_form_fields.html' with field=form.comments %}
+			</div>
+			<div class="sectionCore">
+				{% include './_formset.html' with formset=proposaldocuments formset_name='proposaldocument' formset_template='esteem/proposaldocument_proposal_form.html' formset_title='' addable=True  %}
+			</div>
+
+		<div id="div_submit" class="page">
+
+			{% include './_form_buttons.html' with buttons=1 type1="submit" id1="button_submit" caption1="Submit" %}
+
+		</div>
+	</div>
+</form>
+<script>
+
+document.getElementById('button_submit').addEventListener('click', function(e) {
+	e.preventDefault();
+	document.getElementById('form').submit();
+});
+</script>
+<script src="{% static 'addformsetform/addformsetform.js' %}"></script>
+<script type='text/javascript'>
+addFormsetFormInit('div_formset_proposaldocument', 'id_proposaldocument_set');
+/*
+addFormsetFormInit('div_formset_sheetwindow', 'id_sheetwindow_set');
+addFormsetFormInit('div_formset_sheetmarvindoor', 'id_sheetmarvindoor_set');
+addFormsetFormInit('div_formset_sheetdoor', 'id_sheetdoor_set');
+*/
+</script>
+<script type="text/javascript">
+	var defaultComponent = new URL(document.location).searchParams.get('component');
+</script>

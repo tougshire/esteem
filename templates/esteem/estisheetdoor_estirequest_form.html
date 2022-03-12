@@ -1,0 +1,16 @@
+{% load static %}
+<h2>Non-Marvin Doors</h2>
+
+{% include './_form_fields.html' with field=form.new_or_replacement  %}
+{% include './_form_fields.html' with field=form.optiondoorbrand  %}
+{% include './_form_fields.html' with field=form.model_number %}
+{% include './_form_fields.html' with label="size/handing" field1=form.size label2='/ ' field2=form.handing %}
+{% include './_form_fields.html' with field=form.transom_height %}
+{% include './_form_fields.html' with field=form.optionexterior_color %}
+{% include './_form_fields.html' with field=form.optioninterior_finish %}
+{% include './_form_fields.html' with field=form.optionhardware_finish %}
+{% include './_form_fields.html' with field=form.optionhardware_style %}
+{% include './_form_fields.html' with field=form.optionscreen %}
+{% include './_form_fields.html' with field=form.optionshades %}
+{% include './_form_fields.html' with field=form.optionlock_sensors %}
+{% include './_form_fields.html' with field=form.comments %}

@@ -1,0 +1,32 @@
+{% if form.title.errors %}
+    <div class="formFieldErrors">
+        {{ form.title.errors }}
+    </div>
+{% endif %}
+{% if form.uploadedfile.errors %}
+    <div class="formFieldErrors">
+        {{ form.uploadedfile.errors }}
+    </div>
+{% endif %}
+<div class="formFieldWrapper" {% if last %} data-last="last"{% endif %}>
+    <div class="formFieldLabel">
+        {% if forloop.first %}
+            {{ form.title.label_tag }}
+        {% endif %}
+    </div>
+    <div class="formFieldWidget">
+        {{ form.title }} 
+    </div>
+    <div class="formFieldLabelSibling">
+        {% if forloop.first %}
+            {{ form.uploadedfile.label_tag }} 
+        {% endif %}
+    </div>
+    <div class="formFieldWidgetSibling">
+        {{ form.uploadedfile }} 
+    </div>
+</div>
+
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}

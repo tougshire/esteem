@@ -1,0 +1,16 @@
+{% extends './_base.html' %}
+{% load static %}
+{% block objectheader %}
+<div class="objectTitle"><h2>Estimate Request - Create</h2></div>
+{% endblock %}
+{% block objectmenu %}
+  {% include './estirequest_menu.html' with thisview='create' %}
+{% endblock %}
+{% block content %}
+<form id="form" method="post">
+{% csrf_token %}
+<button type="submit">Confirm Create</button>
+</form>
+{% endblock %}
+
+

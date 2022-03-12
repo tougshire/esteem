@@ -1,0 +1,117 @@
+{% load static %}
+
+<form id="form" method="post" enctype="multipart/form-data"  >
+
+	{{ form.media }}
+	{% csrf_token %}
+	<div class="main">
+		{% if messages %}
+			<!-- Error messaging -->
+			<div id="messages">
+				<div class="inner">
+					<ul>
+						{% for message in messages %}
+							<li>{{ message }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<!-- /Error messaging -->
+		{% endif %}
+		{% if form.errors %}
+			<!-- Error messaging -->
+			<div id="errors">
+				<div class="inner">
+					<p>There were some errors in the information you entered. Please correct the following:</p>
+					{{ form.non_field_errors }}
+					<ul>
+						{% for field in form %}
+							{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<!-- /Error messaging -->
+		{% endif %}
+		<div id="div_home" class="page">
+			<div class="sectionCore">
+				{% include './_form_fields.html' with field=form.name %}
+				{% include './_form_fields.html' with field=form.email %}
+				{% include './_form_fields.html' with field=form.phone %}
+				{% include './_form_fields.html' with field=form.billing_address %}
+				{% include './_form_fields.html' with field=form.additional_contact %}
+			</div>
+			<div class="sectionCore" id="div_type">
+					{% include './_form_fields.html' with field=form.is_type_commercialgc wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.is_type_builder wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.is_type_remodeler wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.is_type_homeowner wrapperclass='indent1' %}
+			</div>
+			<div class="sectionCore">
+				{% include './_form_fields.html' with field=form.business_card %}
+				{% include './_form_fields.html' with field=form.custom_logo %}
+			<div class="sectionCore">
+				{% include './_form_fields.html' with field=form.archived %}
+			</div>
+		</div>
+
+		<div id="div_submit" class="page">
+
+			{% include './_form_buttons.html' %}
+
+		</div>
+
+	</div>
+</form>
+
+<script>
+function showHide(elementId, showHide='toggle') {
+	showHideEl=document.getElementById(elementId);
+	if(showHideEl.style.display=='none' || showHide=='show') {
+		showHideEl.style.removeProperty('display');
+	}
+	if(!showHideEl.style.display=='none' || showHide=='hide') {
+		showHideEl.style.display='none';
+	}
+}
+
+type_names=[];
+type_names[0]={"name":"builder","label":"Builder"};
+type_names[1]={"name":"remodeler","label":"Remodeler"};
+type_names[2]={"name":"homeowner","label":"Homeowner"};
+
+function showTypes() {
+	var typeDisplay=document.getElementById("input_typeDisplay");
+	typeDisplay.value="";
+	for (t=0; t<type_names.length; t++) {
+		if(document.getElementById('id_is_type_' + type_names[t].name).value=='Y') {
+			if(typeDisplay.value > "") {
+				typeDisplay.value = typeDisplay.value + ", ";
+			}
+			typeDisplay.value = typeDisplay.value + type_names[t].label;
+		}
+	}
+}
+document.getElementById('input_typeDisplay').addEventListener('click', function(e) {
+	showHide('div_typeControls');
+});
+
+document.getElementById('div_typeControls').addEventListener('change', function(e) {
+	showHide('div_productControls','hide')
+	showTypes();
+});
+
+document.getElementById('input_typeDisplay').addEventListener('focus', function(e) {
+	showTypes();
+});
+
+
+document.getElementById('input_typeDisplay').addEventListener('keydown', function(e) {
+	showTypes();
+});
+
+showTypes();
+showHide('div_typeControls');
+	</script>
+
+

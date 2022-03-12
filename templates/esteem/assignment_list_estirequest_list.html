@@ -1,0 +1,7 @@
+<div class="cell span{{ span }}">
+    {% for assignment in object_list %}
+				{% if not forloop.first %}, {% endif %}
+        {{ assignment.salesperson.name }}
+    {% endfor %}        
+</div>
+

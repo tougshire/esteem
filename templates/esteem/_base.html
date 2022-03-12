@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+        Ervin - Estimating Hub
+	</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'esteem/tougshire.css' %}"/>
+</head>
+<body>
+{% include './_app_menu.html' %}
+<div id="div_appHeader" class="appHeader">
+    <div id="div_appTitle" class="appTitle">
+            <h1>Ervin - Estimating Hub</h1>
+            <p>Welcome to the Ervin Architectural Products Estimating Hub</p>
+        </div>
+    <div id="div_appLogo" class="appLogo">
+        {% if user.salesperson_set.first.associated_customer.custom_logo %}
+            <img class="appLogo" src="{{ user.salesperson_set.first.associated_customer.custom_logo.url }}"/>
+        {% else %}
+            <img class="appLogo" src="{% static 'esteem/ervin_badge.png' %}"/>
+        {% endif %}
+    </div>
+</div>
+{% block objectmenu %}
+{% endblock %}
+{% block objectheader %}
+{% endblock %}
+{% block content %}
+{% endblock %}
+{% block javascript %}
+{% endblock %}
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}
+</body>
+</html>

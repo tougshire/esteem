@@ -1,0 +1,40 @@
+{% load static %}
+<h2>Exterior Millwork</h2>
+<h3>Intex Millwork Railing</h3>
+<div class="sectionExteriorMillwork">
+	<div class="gridRow">
+		<div class="label">Railing:</div><div>{{ form.railingstyle }}</div><div class="label">Comments:</div><div>{{ form.railingstylecomments }}</div>
+	</div>
+	<div class="formTabularRow">
+		<div class="label">Take off:</div><div class="span3">{{ form.takeoff }}</div>
+	</div>
+	<div class="formTabularRow">
+		<div class="label">Level Rail Sections:</div><div>{{ form.railinglevel }}</div><div class="label">Stair Rail Sections</div><div>{{ form.railingstair }}</div>
+	</div>
+	<div class="formTabularRow">
+		<div class="label">Structural Newel Posts:</div><div>{{ form.railingnewelposts }}</div><div class="label">Newel Covers</div><div>{{ form.railingnewelcovers }}</div><div class="label">Newel Brackets</div><div>{{ form.railingnewelbrackets }}</div>
+	</div>
+	<h3>Columns</h3>
+	<div class="sectionExteriorMillwork">
+		<div class="formTabularRow">
+			<div class="label">Columns(comments):</div><div class="span3">{{ form.columncomments }}</div>
+		</div>
+	</div>
+	<h3>Decking</h3>
+	<div class="sectionExteriorMillwork">
+		<div class="formTabularRow">
+			<div class="label">Brand:</div><div>{{ form.optionexteriormillworkdeckingbrand }}</div><div class="label">Collection:</div><div>{{ form.optionexteriormillworkdeckingcollection }}</div>
+		</div>
+		<div class="formTabularRow">
+			<div class="label">Color:</div><div>{{ form.deckingcolor }}</div><div class="label">Grooves:</div><div>{{ form.deckinggrooves }}</div>
+		</div>
+	</div>
+	<h3>Shutters</h3>
+	<div class="sectionExteriorMillwork">
+		<div class="formTabularRow">
+			<div class="label">Shutters(comments):</div><div class="span3">{{ form.shutters }}</div>
+		</div>
+	</div>
+</div>
+
+

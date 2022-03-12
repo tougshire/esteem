@@ -1,0 +1,372 @@
+{% load static %}
+{% load tougshire_extras %}
+
+<div id="div_pageLinks" class="pageLinks">
+</div>
+
+<div id=div_home class="page">
+	<div class="sectionRequestnum">
+		{% get_field_label object "requestnum" as label %}
+		{% include './_detail_1field.html' with field=object.requestnum label=label %}
+		{% get_field_label object "status" as label %}
+		{% include './_detail_1field.html' with field=object.get_status_display label=label %}
+    {% if object.get_latest_proposal %}
+			{% url 'proposal_detail' object.get_latest_proposal.pk as url %}
+			{% include './_detail_1field.html' with field=object.get_latest_proposal label='Proposal' link_to=url %}
+    {% endif %}
+	</div>
+
+	<div class="sectionCore">
+
+		{% get_field_label object "name" as label %}
+		{% include './_detail_1field.html' with field=object.name label='Name' %}
+		{% get_field_label object "address" as label %}
+		{% include './_detail_1field.html' with field=object.address label='address' %}
+		{% get_field_label object "citystzip" as label %}
+		{% include './_detail_1field.html' with field=object.citystzip label='City st zip' %}
+		{% get_field_label object "request_date" as label %}
+		{% include './_detail_1field.html' with field=object.request_date label='Date' %}
+    {% comment %}
+		{% get_field_label object "salesperson" as label %}
+		{% include './_detail_1field.html' with field=object.salesperson label='Salesperson' %}a
+    {% endcomment %}
+		{% for assignment in object.assignment_set.all %}
+      {% include './_detail_1field.html' with field=assignment.salesperson label='salesperson' %}
+		{% endfor %}
+		{% get_field_label object "customer" as label %}
+		{% include './_detail_1field.html' with field=object.customer label='Customer' %}
+	</div>
+
+	<div class="sectionCore">
+		<input type="checkbox" id="id_has_windows" {% if object.has_windows %}checked="True"{% endif %} style="display:none">
+		<input type="checkbox" id="id_has_marvindoors" {% if object.has_marvindoors %}checked="True"{% endif %} style="display:none">
+		<input type="checkbox" id="id_has_doors" {% if object.has_doors %}checked="True"{% endif %} style="display:none">
+		<input type="checkbox" id="id_has_icfs" {% if object.has_icfs %}checked="True"{% endif %} style="display:none">
+		<input type="checkbox" id="id_has_interiormillworks" {% if object.has_interiormillworks %}checked="True"{% endif %} style="display:none">
+		<input type="checkbox" id="id_has_exteriormillworks" {% if object.has_exteriormillworks %}checked="True"{% endif %} style="display:none">
+
+		<div class="detailFieldWrapper">
+			<div class="detailFieldLabel">
+					Products
+			</div>
+			<div class="detailFieldWidget">
+				<div id="productDisplay"></div> 
+			</div>
+		</div>
+
+	</div> 
+	<div class="sectionCore">
+		{% for document in object.estirequestdocument_set.all %}
+			{% if document.uploadedfile %}
+				{% if document.title > "" %}
+					{% include './_detail_1field.html' with field=document.title label='document' link_to=document.uploadedfile.url %}
+				{% else %}
+					{% include './_detail_1field.html' with field=document.uploadedfile.url label='document' link_to=document.uploadedfile.url %}
+				{% endif %}
+			{% else %}
+				{% include './_detail_1field.html' with field=document.uploadedfile label='document' %}
+			{% endif %}
+		{% endfor %}
+	</div>
+	<div class="sectionCore">
+		{% include './_detail_1field.html' with field=object.comments|linebreaks label='Comments' %}
+	</div>
+</div>
+
+<div id="div_windows" class="page" style="display:none">
+	<h2>Windows</h2>
+	{% for estisheet in object.estisheetwindow_set.all %}
+
+		{% include './_detail_1field.html' with field=estisheet.new_or_replacement label='new_or_replacement' %}
+		{% include './_detail_1field.html' with field=estisheet.optionwindowbrand label='brand' %}
+		{% include './_detail_1field.html' with field=estisheet.optionexterior_color label='exterior_color' %}
+		{% include './_detail_1field.html' with field=estisheet.optioninterior_finish label='interior_finish' %}
+		{% include './_detail_1field.html' with field=estisheet.optionhardware_finish label='hardware_finish' %}
+		{% include './_detail_1field.html' with field=estisheet.optionscreen label='screen' %}
+		{% include './_detail_1field.html' with field=estisheet.optionshades label='shades' %}
+		{% include './_detail_1field.html' with field=estisheet.optionlock_sensors label='lock_sensors' %}
+		{% include './_detail_1field.html' with field=estisheet.comments|linebreaks label='comments' %}
+	{% endfor %}
+
+</div>
+
+<div id="div_marvindoors" class="page" style="display:none">
+	<h2>Marvin Doors</h2>
+	{% for estisheet in object.estisheetmarvindoor_set.all %}
+
+
+		{% include './_detail_1field.html' with field=estisheet.new_or_replacement label='new_or_replacement' %}
+		{% include './_detail_1field.html' with field=estisheet.optionmarvindoorbrand label='brand' %}
+		{% include './_detail_1field.html' with field=estisheet.optionexterior_color label='exterior_color' %}
+		{% include './_detail_1field.html' with field=estisheet.optioninterior_finish label='interior_finish' %}
+		{% include './_detail_1field.html' with field=estisheet.optionhardware_finish label='hardware_finish' %}
+		{% include './_detail_1field.html' with field=estisheet.optionscreen label='screen' %}
+		{% include './_detail_1field.html' with field=estisheet.optionshades label='shades' %}
+		{% include './_detail_1field.html' with field=estisheet.optionlock_sensors label='lock_sensors' %}
+		{% include './_detail_1field.html' with field=estisheet.comments|linebreaks label='comments' %}
+	{% endfor %}
+
+</div>
+
+<div id="div_doors" class="page" style="display:none">
+	<h2>Non-Marvin Doors</h2>
+	{% for estisheet in object.estisheetdoor_set.all %}
+
+
+		{% include './_detail_1field.html' with field=estisheet.new_or_replacement label='new_or_replacement' %}
+		{% include './_detail_1field.html' with field=estisheet.optiondoorbrand label='brand' %}
+		{% include './_detail_1field.html' with field=estisheet.optionexterior_color label='exterior_color' %}
+		{% include './_detail_1field.html' with field=estisheet.optioninterior_finish label='interior_finish' %}
+		{% include './_detail_1field.html' with field=estisheet.optionhardware_finish label='hardware_finish' %}
+		{% include './_detail_1field.html' with field=estisheet.optionscreen label='screen' %}
+		{% include './_detail_1field.html' with field=estisheet.optionshades label='shades' %}
+		{% include './_detail_1field.html' with field=estisheet.optionlock_sensors label='lock_sensors' %}
+		{% include './_detail_1field.html' with field=estisheet.comments|linebreaks label='comments' %}
+	{% endfor %}
+
+</div>
+
+<div id="div_icfs" class="page" style="display:none">
+	<h2>ICF</h2>
+	{% for estisheet in object.estisheeticf_set.all %}
+
+		{% include './_detail_1field.html' with field=estisheet.option0thickness label='Foundation Wall Thickness' %}
+		{% include './_detail_1field.html' with field=estisheet.option1thickness label='1st Floor Wall Thickness' %}
+		{% include './_detail_1field.html' with field=estisheet.option2thickness label='2nd Floor Wall Thickness' %}
+		{% include './_detail_1field.html' with field=estisheet.option3thickness label='3rd Floor Wall Thickness' %}
+		{% include './_detail_1field.html' with field=estisheet.optionpargecoating label='Foundation Parge Coating' %}
+		{% include './_detail_1field.html' with field=estisheet.optionbgmembrane label='Below Grade Waterproofing Membrane' %}
+		{% include './_detail_1field.html' with field=estisheet.optionslabinsulation label='Slab On Grade Insulation - Hydrofoam' %}
+		{% include './_detail_1field.html' with field=estisheet.optionfloor label='ICF Floor System' %}
+		{% include './_detail_1field.html' with field=estisheet.optionroof label='ICF Roof System' %}
+		{% include './_detail_1field.html' with field=estisheet.comments|linebreaks label='comments' %}
+
+	{% endfor %}
+
+</div>
+
+<div id="div_interiormillworks" class="page" style="display:none">
+	<h2>Interior Millwork</h2>
+	{% for estisheet in object.estisheetinteriormillwork_set.all %}
+		<h3>Primary</h3>
+		<div class="sectionInteriorMillwork">
+			<div class="formTabularRow">
+				<div class="label">Primary Species</div><div class="value">{{ estisheet.primaryspecies }}</div>
+			</div>	
+		</div>
+		<h3>Interior Trim</h3>
+		<div class="sectionInteriorMillwork">
+			<div class="formTabularRow">
+				<div></div><div class="label">Base</div><div class="label">Casing</div><div class="label">Crown</div><div class="label">Comments</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Type1:</div><div class="value">{{ estisheet.trim1baselength }}</div><div class="value">{{ estisheet.trim1casinglength }}</div><div class="value">{{ estisheet.trim1crownlength }}</div><div class="value">{{ estisheet.trim1comments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Width/Size:</div><div class="value">{{ estisheet.trim1basewidthsize }}</div><div class="value">{{ estisheet.trim1casingwidthsize }}</div><div class="value">{{ estisheet.trim1crownwidthsize }}</div><div class="value">{{ estisheet.trim1comments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Type2:</div><div class="value">{{ estisheet.trim2baselength }}</div><div class="value">{{ estisheet.trim2casinglength }}</div><div class="value">{{ estisheet.trim2crownlength }}</div><div class="value">{{ estisheet.trim2comments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Width/Size:</div><div class="value">{{ estisheet.trim2basewidthsize }}</div><div class="value">{{ estisheet.trim2casingwidthsize }}</div><div class="value">{{ estisheet.trim2crownwidthsize }}</div><div class="value">{{ estisheet.trim2comments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Type3:</div><div class="value">{{ estisheet.trim3baselength }}</div><div class="value">{{ estisheet.trim3casinglength }}</div><div class="value">{{ estisheet.trim3crownlength }}</div><div class="value">{{ estisheet.trim3comments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Width/Size:</div><div class="value">{{ estisheet.trim3basewidthsize }}</div><div class="value">{{ estisheet.trim3casingwidthsize }}</div><div class="value">{{ estisheet.trim3crownwidthsize }}</div><div class="value">{{ estisheet.trim3comments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="start4 label">Window Stool with Skirt</div><div class="start5 value">{{ estisheet.windowstoolskirt }}</div>
+			</div>
+		</div>
+		<h3>Casing Details</h3>
+		<div class="sectionInteriorMillwork">
+			<div class="formTabularRow">
+				<div class="label">Picture Frame</div><div class="value">{{ estisheet.pictureframe }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">D/W Return</div><div class="value">{{ estisheet.dwreturn }}</div><div class="label">Interior Columns</div><div class="span2 value">{{ estisheet.interiorcolumns }}</div>
+			</div>
+		</div>
+		<h3>Interior Doors</h3>
+		<div class="sectionInteriorMillwork">
+			<div class="formTabularRow">
+				<div class="label">Door Style</div><div class="value">{{ estisheet.doorstyle }}</div><div class="label">Hanging</div><div class="span2 value">{{ estisheet.doorhanging }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Jamb Thickness</div><div class="value">{{ estisheet.jambthickness }}</div><div class="label">Specialty Doors</div><div class="span2 value">{{ estisheet.specialtydoors }}</div>
+			</div>
+		</div>
+		<h3>Stairs</h3>
+		<div class="sectionInteriorMillwork">
+			<div class="formTabularRow">
+				<div></div><div class="label">Tread (Species)</div><div class="label">Riser</div><div class="label">Handrail (Style/Species)</div><div class="label">Picket/Newels (Style, Paint/Stain, Species)</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Type 1</div><div class="value">{{ estisheet.stair1treadspecies }}</div><div class="value">{{ estisheet.stair1riserspecies }}</div><div class="value">{{ estisheet.stair1handrail }}</div><div class="value">{{ estisheet.stair1picketnewel }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Type 2</div><div class="value">{{ estisheet.stair2treadspecies }}</div><div class="value">{{ estisheet.stair2riserspecies }}</div><div class="value">{{ estisheet.stair2handrail }}</div><div class="value">{{ estisheet.stair2picketnewel }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Type 3</div><div class="value">{{ estisheet.stair3treadspecies }}</div><div class="value">{{ estisheet.stair3riserspecies }}</div><div class="value">{{ estisheet.stair3handrail }}</div><div class="value">{{ estisheet.stair3picketnewel }}</div>
+			</div>
+		</div>
+		<h3>Specialty Areas</h3>
+		<div class="sectionInteriorMillwork">
+			<div class="formTabularRow">
+				<div class="start2 label">Wainscot</div><div class="span3 value">{{ estisheet.wainscot }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="start2 label">Coffered Ceiling</div><div class="span3 value">{{ estisheet.cofferedceiling }}</div>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+<div id="div_exteriormillworks" class="page" style="display:none">
+	<h2>Exterior Millwork</h2>
+	{% for estisheet in object.estisheetexteriormillwork_set.all %}
+		<h3>Itex Millwork Railing</h3>
+		<div class="sectionExteriorMillwork">
+			<div class="formTabularRow">
+				<div class="label">Railing:</div><div>{{ estisheet.railingstyle }}</div><div class="label">Comments:</div><div>{{ estisheet.railingstylecomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Take off:</div><div class="span3">{% if estisheet.takeoff %}<a href="{{ estisheet.takeoff.url }}">{{ estisheet.takeoff.url|filename }}</a>{% endif %}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Level Rail:</div><div>{{ estisheet.railinglevel }}</div><div class="label">Stair Rail</div><div>{{ estisheet.railingstair }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Structural Newel Posts:</div><div>{{ estisheet.railingnewelposts }}</div><div class="label">Newel Covers</div><div>{{ estisheet.railingnewelcovers }}</div><div class="label">Newel Brackets</div><div>{{ estisheet.railingnewelbrackets }}</div>
+			</div>
+		</div>
+		<h3>Columns</h3>
+		<div class="sectionExteriorMillwork">
+			<div class="formTabularRow">
+				<div class="label">Columns:</div><div class="span3">{{ estisheet.columncomments|linebreaks }}</div>
+			</div>
+		</div>
+		<h3>Decking</h3>
+		<div class="sectionExteriorMillwork">
+			<div class="formTabularRow">
+				<div class="label">Brand:</div><div>{{ estisheet.optionexteriormillworkdeckingbrand }}</div><div class="label">Collection:</div><div>{{ estisheet.optionexteriormillworkdeckingcollection }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Color:</div><div>{{ estisheet.deckingcolor }}</div><div class="label">Grooves:</div><div>{{ estisheet.deckinggrooves }}</div>
+			</div>
+		</div>
+		<h3>Shutters</h3>
+		<div class="sectionExteriorMillwork">
+			<div class="formTabularRow">
+				<div class="label">Shutters(comments):</div><div class="span3">{{ estisheet.columncomments|linebreaks }}</div>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+<div id="div_addProposal" class="page" >
+	{% if perms.esteem.add_proposal %}
+		{% if object.status == object.STATUS_SUBMITTED %}
+			<div class="detailFieldWrapper ">
+				<div class="detailFieldLabel"></div>
+				<div class="detailFieldWidget">
+						<button id="btn_proposal" type="button" class="bigButton" data-url="{% url "proposal_create" object.pk %}">Create Proposal</button>
+				</div>
+			</div>
+		{% endif %}
+	{% endif %}
+</div>
+
+
+<script>
+
+var btn_proposal=document.getElementById("btn_proposal");
+if (btn_proposal !== null) {
+	btn_proposal.addEventListener('click', function(e) {
+		e.preventDefault();
+		if(at_page > "" && at_page !== "home") {
+			window.location=e.target.getAttribute('data-url') + '/' + at_page;
+		} else {	
+			window.location=e.target.getAttribute('data-url');
+		}
+	});
+}
+
+page_names = [];
+page_names[0]={"name":"home", "plname":"home","label":"Home","chk":false};
+page_names[1]={"name":"window", "plname":"windows","label":"Windows","chk":true};
+page_names[2]={"name":"marvindoor", "plname":"marvindoors","label":"Marvin Doors","chk":true};
+page_names[3]={"name":"door", "plname":"doors","label":"Non-Marvin Doors","chk":true};
+page_names[4]={"name":"icf", "plname":"icfs","label":"ICF","chk":true};
+page_names[5]={"name":"interiormillwork", "plname":"interiormillworks","label":"Interior Mill Work","chk":true};
+page_names[6]={"name":"exteriormillwork", "plname":"exteriormillworks","label":"Exterior Mill Work","chk":true};
+at_page = page_names[0].name;
+
+
+var productDisplay=document.getElementById("productDisplay");
+productDisplay.innerHTML="";
+
+for (p=0; p<page_names.length; p++) {
+	if(page_names[p].chk==true) {
+		if(document.getElementById('id_has_' + page_names[p].plname).checked==true) {
+			if(productDisplay.innerHTML > "") {
+				productDisplay.innerHTML = productDisplay.innerHTML + ", ";
+			}
+			productDisplay.innerHTML = productDisplay.innerHTML + page_names[p].label;
+		}
+	}
+}
+
+function showPageLinks() {
+
+	var pageLinksDiv = document.getElementById("div_pageLinks");
+	var pageLinks = [];
+
+	while( pageLinksDiv.firstChild) {
+		pageLinksDiv.removeChild(pageLinksDiv.firstChild);
+	}
+	pageLinksDiv.innerHTML='';
+	
+  for(p=0; p < page_names.length; p++ ) {
+		if(page_names[p].chk==false || document.getElementById('id_has_' + page_names[p].plname).checked==true) {
+			var pageLinkDiv=document.createElement('div');
+			pageLinkDiv.classList.add("pageLinkItem");
+			if(page_names[p].plname==at_page) {
+				pageLinkDiv.classList.add("at_page");
+			}
+			var pageLink=document.createElement('a');
+			pageLink.classList.add('pageLinkA');
+			pageLink.href='#' + page_names[p].plname;
+			pageLink.innerHTML=page_names[p].label;
+			pageLinkDiv.appendChild(pageLink)
+			pageLinksDiv.appendChild(pageLinkDiv);
+    }
+  }
+	var pageLinks = document.getElementsByClassName('pageLinkA');
+	for(i=0; i<pageLinks.length; i++ ) {
+		pageLinks[i].addEventListener('click', function(e){
+			e.preventDefault();
+			goto(e.target);
+		});
+	}
+}
+
+function goto(target) {
+
+	for( i=0; i<page_names.length; i++ ) {
+		document.getElementById('div_' + page_names[i].plname).style.display="none";
+	}
+
+	targetPageName=target.href.split('#')[1];
+
+	at_page=targetPageName;
+
+	document.getElementById('div_' + targetPageName).style.display="block";
+
+	showPageLinks();
+}
+
+showPageLinks();
+  </script>

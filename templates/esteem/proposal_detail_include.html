@@ -1,0 +1,20 @@
+{% load static %}
+{% load tougshire_extras %}
+
+
+<div id=div_home class="page">
+	<div class="sectionCore">
+
+		{% include './_detail_1field.html' with field=object.estirequest label='Project' %}
+		{% include './_detail_1field.html' with field=object.amount|dollar|rjust:"10" label='Amount' %}
+		{% include './_detail_1field.html' with field=object.estimator label='Estimator' %}
+		{% include './_detail_1field.html' with field=object.create_date label='Date' %}
+		{% for document in object.proposaldocument_set.all %}
+			{% include './_detail_fields.html' with label="Document" fields=2 field1=document.uploadedfile link_to1=document.uploadedfile.url field2=document.title %}
+		{% endfor %}
+		{% include './_detail_1field.html' with field=object.comments|linebreaks label='Comments' %}
+		
+
+	</div>
+</div>
+

@@ -1,0 +1,17 @@
+{% if field.errors %}
+    <div class="formFieldErrors">
+        {{ field.errors }}
+    </div>
+{% endif %}
+<div class="formFieldWrapper">
+    <div class="formFieldLabel">
+        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+    </div>
+    <div class="formFieldWidget">
+        {{ field }} 
+    </div>
+</div>
+
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}

@@ -1,0 +1,10 @@
+<div class="detailFieldWrapper">
+    <div class="detailFieldLabel">
+			Items	
+    </div>
+    <div class="detailFieldWidget">
+      {% for element in object_list %} 
+			<div>{{ element.estirequest.name }}</div>
+      {% endfor %}
+    </div>
+</div>

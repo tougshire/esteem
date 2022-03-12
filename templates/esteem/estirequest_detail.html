@@ -1,0 +1,10 @@
+{% extends './_base.html' %}
+{% block objectheader %}
+<div class="objectTitle"><h2>{{ object }}</h2></div>
+{% endblock %}
+{% block objectmenu %}
+  {% include './estirequest_menu.html' with thisview='detail' %}
+{% endblock %}
+{% block content %}
+	{% include './estirequest_detail_include.html' %}
+{% endblock %}

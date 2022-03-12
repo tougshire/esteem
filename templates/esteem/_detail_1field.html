@@ -1,0 +1,16 @@
+<div class="detailFieldWrapper">
+    <div class="detailFieldLabel">
+        {{ label }}
+    </div>
+    <div class="detailFieldWidget">
+        {% if link_to %}
+            <a href="{{ link_to }}">{{ field }}</a>
+        {% else %}
+            {{ field }} 
+        {% endif %}
+    </div>
+</div>
+
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}

@@ -1,0 +1,29 @@
+
+{% include './_form_fields.html' with label='Date' field=form.create_date %}
+{% include './_form_fields.html' with label='Estimator' field=form.estimator %}
+{% include './_form_fields.html' with label='Document' field=form.uploadedfile %}
+{% include './_form_fields.html' with label='Amount' field=form.amount %}
+
+{% comment %}
+{% extends 'esteem/_popup.html' %}
+{% block content %}
+<form method="POST" id="form" enctype="multipart/form-data" >
+{{ form.non_field_errors }}
+{% csrf_token %}
+{% include 'ervin/_form_field.html' with formfield=form.create_date %}
+{% include 'ervin/_form_field.html' with formfield=form.estimator %}
+{% include 'ervin/_form_field.html' with formfield=form.amount %}
+{% include 'ervin/_form_field.html' with formfield=form.uploadedfile %}
+</form>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+  if("{{ success }}"){
+    window.parent.updateSelects(window.frameElement, '{{ object.pk }}', '{{ object }}');
+  }
+</script>
+
+{% endblock %}
+
+{% endcomment %}

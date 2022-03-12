@@ -1,0 +1,19 @@
+{% if form.errors %}
+    <div class="formFieldErrors">
+        {{ form.errors }}
+    </div>
+{% endif %}
+<div class="formFieldWrapper" {% if last %} data-last="last"{% endif %}>
+    <div class="formFieldLabel">
+        {% if forloop.first %}
+            {{ subform.product.label_tag }}
+        {% endif %}
+    </div>
+    <div class="formFieldWidget">
+       {{ subform.product }} 
+    </div>
+</div>
+
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}

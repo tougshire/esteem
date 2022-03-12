@@ -1,0 +1,21 @@
+{% extends './_base.html' %}
+{% load static %}
+{% block objectheader %}
+<div class="objectTitle"><h2>{{ object }} - Delete</h2></div>
+{% endblock %}
+{% block objectmenu %}
+  {% include './proposal_menu.html' with thisview='delete' %}
+{% endblock %}
+{% block content %}
+	<form method="post">
+		{% csrf_token %}
+    <div class="formFieldWrapper">
+      <div class="formFieldLabel">
+      </div>
+      <div class="formFieldWrapper">
+        <button type="submit" id="button_delete">Confirm Delete</button>
+      </div>
+    </div>
+  </form>
+  {% include './proposal_detail_include.html' %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% if thisview == "list" %}
+{% else %}
+  <div class="menuitem">
+    <a href="{% url 'salesperson_list' %}">List</a>
+  </div>
+{% endif %}
+{% if perms.esteem.add_salesperson %}
+  {% if thisview == "create" %}
+  {% else %}
+    <div class="menuitem">
+      <a href="{% url 'salesperson_create' %}">Create</a>
+    </div>
+  {% endif %}
+{% endif %}
+{% if perms.esteem.view_salesperson %}
+  {% if thisview == "detail" %}
+  {% else %}
+    <div class="menuitem">
+      <a href="{% url 'salesperson_detail' object.pk %}">Detail</a>
+    </div>
+  {% endif %}
+{% endif %}
+{% if perms.esteem.change_salesperson %}
+  {% if thisview == "update" %}
+  {% else %}
+    <div class="menuitem">
+      <a href="{% url 'salesperson_update' object.pk %}">Edit</a>
+    </div>
+  {% endif %}
+{% endif %}
+{% if perms.esteem.delete_salesperson %}
+  {% if thisview == "delete" %}
+  {% else %}
+    <div class="menuitem">
+      <a href="{% url 'salesperson_delete' object.pk %}">Delete</a>
+    </div>
+  {% endif %}
+{% endif %}

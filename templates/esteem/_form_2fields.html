@@ -1,0 +1,94 @@
+{% if not fields > 0 %}
+    <div class="formFieldWrapper">
+        <div class="formFieldLabel">
+            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        </div>
+        <div class="formFieldWidgetWrapper">
+            <div class="formFieldWidget">
+                {{ field }} 
+            </div>
+        </div>
+    </div>
+{% elif fields == 1 %}
+    <div class="formFieldWrapper">
+        <div class="formFieldLabel">
+            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        </div>
+        <div class="formFieldWidgetWrapper {{ class1 }}" {{ attrs1 }}>
+            {% if label1 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label1 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                {{ field1 }} 
+            </div>
+        </div>
+    </div>
+{% elif fields == 2 %}
+    <div class="formFieldWrapper">
+        <div class="formFieldLabel">
+            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        </div>
+        <div class="formFieldWidgetWrapper {{ class1 }}" {{ attrs1 }}>
+            {% if label1 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label1 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                {{ field1 }} 
+            </div>
+        </div>
+        <div class="formFieldWidgetWrapper {{ class2 }}" {{ attrs2 }}>
+            {% if label2 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label2 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                {{ field2 }} 
+            </div>
+        </div>
+    </div>
+{% elif fields == 3 %}
+    <div class="formFieldWrapper">
+        <div class="formFieldLabel">
+            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        </div>
+        <div class="formFieldWidgetWrapper {{ class1 }}" {{ attrs1 }}>
+            {% if label1 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label1 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                {{ field1 }} 
+            </div>
+        </div>
+        <div class="formFieldWidgetWrapper {{ class2 }}" {{ attrs2 }}>
+            {% if label2 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label2 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                {{ field2 }} 
+            </div>
+        </div>
+        <div class="formFieldWidgetWrapper {{ class3 }}" {{ attrs3 }}>
+            {% if label3 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label3 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                {{ field3 }} 
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}

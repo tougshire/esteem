@@ -1,0 +1,28 @@
+{% load esteem_extras %}
+<div class="menubar">
+		<div class='menuitem'>
+			 <a href="{% url 'estirequest_list' %}">Estimate Requests</a>
+		</div>
+		{% if perms.esteem.list_proposals %}
+			<div class='menuitem'>
+				 <a href="{% url 'proposal_list' %}">Proposals</a>
+			</div>
+		{% endif %}
+		<div class='menuitem'>
+			 <a href="{% url 'customer_list' %}">Customers</a>
+		</div>
+
+
+        {% if user.is_authenticated %}
+          <div class="menuitem">
+            <a href="{% url 'logout'  %}?next={% url 'esteem' %}" >
+              Log Out {{ user.get_username }}
+            </a>
+          </div>
+        {% else %}
+          <div class="menuitem">
+            <a href="{% url 'login' %}" >Log In</a>
+          </div>
+        {% endif %}
+
+</div>

@@ -1,0 +1,371 @@
+{% load static %}
+
+<div id="div_pageLinks" class="pageLinks">
+</div>
+
+<form name="form" id="form" method="post" enctype="multipart/form-data"  >
+	{{ form.media }}
+	{% csrf_token %}
+	<input type="hidden" name="at_page" id="at_page" value="{{ at_page }}">
+	{{ form.submit_date.as_hidden }}
+	<div class="main">
+		{% if messages %}
+			<!-- Messaging -->
+			<div id="messages">
+				<div class="inner">
+					<ul>
+						{% for message in messages %}
+							<li>{{ message }}</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<!-- /Messaging -->
+		{% endif %}
+		{% if form.errors %}
+			<!-- Error messaging -->
+			<div id="errors">
+				<div class="inner">
+					<p>There were some errors in the information you entered. Please correct the following:</p>
+					{{ form.non_field_errors }}
+					<ul>
+						{% for field in form %}
+							{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<!-- /Error messaging -->
+		{% endif %}
+		<div id="div_home" class="page">
+			<div class="sectionRequestnum">
+				{{ form.status.as_hidden }}
+				{{ form.requestnum.as_hidden }}
+				{% include './_detail_fields.html' with label="Est.Req#" field=form.requestnum.value wrapperattrs='style="grid-template-columns:1fr 3fr;"' %}
+				{% include './_detail_fields.html' with label="Status" field=form.instance.get_status_display wrapperattrs='style="grid-template-columns:1fr 3fr;"' %}
+			</div>
+			<div class="sectionCore">
+				{% include './_form_fields.html' with field=form.name %}
+				{% include './_form_fields.html' with field=form.address %}
+				{% include './_form_fields.html' with field=form.citystzip %}
+				{% include './_form_fields.html' with field=form.request_date %}
+				{% include './_formset.html' with formset=assignments formset_name='assignment' formset_template='esteem/assignment_estirequest_form.html' formset_title='' addable=True  %}
+				{% include './_form_fields.html' with field=form.customer %}
+			</div>
+			<div class="xsectionProducts" id="div_products">
+				{% include './_detail_fields.html' with field='<input type="text" id="input_productDisplay" autocomplete="off" />' label='Select Products'  %}
+				{% comment %}
+				<div class="formFieldWrapper" id="div_productDisplay">
+					<div class="formFieldLabel">Select Products</div>
+					<div class="formFieldWidget"><input type="text" id="input_productDisplay" ></div>
+				</div>
+				{% endcomment %}
+				<div id="div_productControls">
+					{% include './_form_fields.html' with field=form.has_windows wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.has_marvindoors wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.has_doors wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.has_icfs wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.has_interiormillworks wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.has_exteriormillworks wrapperclass='indent1' %}
+				</div>
+			</div>
+			<div class="sectionCore">
+				{% include './_form_fields.html' with field=form.new_or_remodel %}
+			</div>
+			<div class="sectionCore">
+				{% include './_formset.html' with formset=estirequestdocuments formset_name='estirequestdocument' formset_template='esteem/estirequestdocument_estirequest_form.html' formset_title='' addable=True  %}
+			</div>
+			<div class="sectionCore">
+				{% include './_form_fields.html' with field=form.comments %}
+			</div>
+		</div>
+
+		<div id="div_windows" class="page" style="display:none">
+			{% include './_formset.html' with formset=estisheetwindows formset_name='estisheetwindow' formset_template='esteem/estisheetwindow_estirequest_form.html' formset_title='Windows' addable=True  %}
+		</div>
+		<div id="div_marvindoors" class="page" style="display:none">
+			{% include './_formset.html' with formset=estisheetmarvindoors formset_name='estisheetmarvindoor' formset_template='esteem/estisheetmarvindoor_estirequest_form.html' formset_title='Marvin Doors' addable=True  %}
+		</div>
+
+		<div id="div_doors" class="page" style="display:none">
+			{% include './_formset.html' with formset=estisheetdoors formset_name='estisheetdoor' formset_template='esteem/estisheetdoor_estirequest_form.html' formset_title='Non-Marvin Doors' addable=True  %}
+		</div>
+
+		<div id="div_icfs" class="page" style="display:none">
+			{% include './_formset.html' with formset=estisheeticfs formset_name='estisheeticf' formset_template='esteem/estisheeticf_estirequest_form.html' formset_title='ICF' addable=True  %}
+		</div>
+
+		<div id="div_interiormillworks" class="page" style="display:none">
+			<div class="sectionInteriorMillwork">
+			{% include './_formset.html' with formset=estisheetinteriormillworks formset_name='estisheetinteriormillwork' formset_template='esteem/estisheetinteriormillwork_estirequest_form.html' formset_title='Interior Millwork' addable=True  %}
+			</div>
+		</div>
+
+		<div id="div_exteriormillworks" class="page" style="display:none">
+			<div class="sectionExteriorMillwork">
+			{% include './_formset.html' with formset=estisheetexteriormillworks formset_name='estisheetexteriormillwork' formset_template='esteem/estisheetexteriormillwork_estirequest_form.html' formset_title='Exterior Millwork' addable=True  %}
+			</div>
+		</div>
+
+		<div id="div_submit" class="page">
+			{% if form.status.value == status_draft %}
+				{% include './_form_buttons.html' with buttons=2 type1="submit" id1="button_draft" caption1="Save Draft" type2="submit" id2="button_submit" caption2="Submit for Proposal" %}
+			{% elif form.status.value == status_submitted %}
+				{% include './_form_buttons.html' with buttons=2 type1="submit" id1="button_draft" caption1="Revert to Draft" type2="submit" id2="button_submit" caption2="Resubmit" %}
+			{% endif %}	
+		</div>
+
+	</div>
+</form>
+
+<script src="{% static 'addformsetform/addformsetform.js' %}"></script>
+<script type='text/javascript'>
+addFormsetFormInit('div_formset_assignment', 'id_assignment_set');
+addFormsetFormInit('div_formset_estirequestdocument', 'id_estirequestdocument_set');
+</script>
+<script>
+
+var at_page = document.getElementById('at_page');
+var formChanged = false;
+var page_names = [];
+page_names[0]={"name":"home", "plname":"home","label":"Home","chk":false};
+page_names[1]={"name":"window", "plname":"windows","label":"Windows","chk":true};
+page_names[2]={"name":"marvindoor", "plname":"marvindoors","label":"Marvin Doors","chk":true};
+page_names[3]={"name":"door", "plname":"doors","label":"Non-Marvin Doors","chk":true};
+page_names[4]={"name":"icf", "plname":"icfs","label":"ICF","chk":true};
+page_names[5]={"name":"interiormillwork", "plname":"interiormillworks","label":"Interior Mill Work","chk":true};
+page_names[6]={"name":"exteriormillwork", "plname":"exteriormillworks","label":"Exterior Mill Work","chk":true};
+
+function goto(pageName) {
+
+	for( i=0; i<page_names.length; i++ ) {
+		document.getElementById('div_' + page_names[i].plname).style.display="none";
+	}
+
+	at_page.value=pageName;
+
+	document.getElementById('div_' + pageName).style.display="block";
+
+	showPageLinks();
+  
+}
+
+function limitBy(limiterName,limiter) {
+	var limiteesAll=document.querySelectorAll('[data-limitby="' + limiterName + '"]');
+	var limitees=[];
+	for( var i=0; i<limiteesAll.length; i++) {
+		var limiterId=limiteesAll[i].id.replace(limiteesAll[i].getAttribute('data-rawname'),limiterName);
+		if(limiterId==limiter.id) {
+			if(!limitees.includes(limiteesAll[i])){
+				if(!limiteesAll[i].id.match('-__prefix__-')){
+					limitees.push(limiteesAll[i]);
+				}
+			}
+		}
+	}
+	for( var i=0; i<limitees.length; i++ ) {
+		var templateSelectId=limitees[i].id.replace(/-\d-/,'-__prefix__-');
+		var templateSelect=document.getElementById(templateSelectId);
+		if(templateSelect) {
+			var selectedOption=limitees[i].value;
+			limitees[i].innerHTML=''; 
+			var goodOptions = templateSelect.querySelectorAll('[data-' + limiterName + '="' + limiter.value + '"');
+			for( var j=0; j<goodOptions.length; j++) {
+				var cloneOption=goodOptions[j].cloneNode(true);
+				limitees[i].appendChild(cloneOption);
+			}
+			var wrapper=limitees[i].closest('[class="formFieldWrapper "]');
+			if(goodOptions.length==1) {
+				limitees[i].value=goodOptions[0];
+				if(wrapper) {
+					wrapper.style.display='none';
+				}
+			} else if(goodOptions.length==0)  {
+				limitees[i].value='';
+				if(wrapper) {
+					wrapper.style.display='none';
+				}
+			} else {
+				limitees[i].value=selectedOption;
+				if(wrapper) {
+					wrapper.style.removeProperty('display');
+				}
+			}
+		}
+	}
+}
+
+function limitByInit(limiterName) {
+	var limiters=document.querySelectorAll('select[id$="' + limiterName + '"]');
+	for( var i=0; i<limiters.length; i++ ) {
+		limitBy(limiterName, limiters[i]);
+		limiters[i].addEventListener('change', function(e) {
+			limitBy(limiterName, e.target);
+		});
+	}
+}
+
+function showHide(elementId, showHide='toggle') {
+	showHideEl=document.getElementById(elementId);
+	if(showHideEl.style.display=='none' || showHide=='show') {
+		showHideEl.style.removeProperty('display');
+	}
+	else if(!(showHideEl.style.display=='none') || showHide=='hide') {
+		showHideEl.style.display='none';
+	}
+}
+
+function showPageLinks() {
+
+	var pageLinksDiv = document.getElementById("div_pageLinks");
+	var pageLinks = [];
+
+	while( pageLinksDiv.firstChild) {
+		pageLinksDiv.removeChild(pageLinksDiv.firstChild);
+	}
+	pageLinksDiv.innerHTML='';
+	
+  for(p=0; p < page_names.length; p++ ) {
+		if(page_names[p].chk==false || document.getElementById('id_has_' + page_names[p].plname).checked==true) {
+			var pageLinkDiv=document.createElement('div');
+			pageLinkDiv.classList.add("pageLinkItem");
+			if(page_names[p].plname==at_page.value) {
+				pageLinkDiv.classList.add("at_page");
+			}
+			var pageLink=document.createElement('a');
+			pageLink.classList.add('pageLinkA');
+			pageLink.href='#' + page_names[p].plname;
+			pageLink.innerHTML=page_names[p].label;
+			pageLinkDiv.appendChild(pageLink)
+			pageLinksDiv.appendChild(pageLinkDiv);
+    }
+  }
+	var pageLinks = document.getElementsByClassName('pageLinkA');
+	for(i=0; i<pageLinks.length; i++ ) {
+		pageLinks[i].addEventListener('click', function(e){
+			e.preventDefault();
+			var pageName = e.target.href.split('#')[1];
+			goto(pageName);
+		});
+	}
+}
+
+function showProducts() {
+	var productDisplay=document.getElementById("input_productDisplay");
+	productDisplay.value="";
+	for (var p=0; p<page_names.length; p++) {
+		if(page_names[p].chk==true) {
+			if(document.getElementById('id_has_' + page_names[p].plname).checked==true) {
+				if(productDisplay.value > "") {
+					productDisplay.value = productDisplay.value + ", ";
+				}
+				productDisplay.value = productDisplay.value + page_names[p].label;
+			}
+		}
+	}
+}
+
+function updateNewOrRe() {
+	estiRequestNewOrRe=document.getElementById('id_new_or_remodel');
+	newOrRes=document.querySelectorAll('[id$="new_or_replacement"]');
+	for( var i=0; i < newOrRes.length; i++ ){
+		if(!newOrRes[i].id.match('-__prefix__-')){
+			newOrRes[i].value=estiRequestNewOrRe.value;
+		}
+	}
+}
+
+limitByInit('optiondoorbrand');
+limitByInit('optionmarvindoorbrand');
+limitByInit('optionwindowbrand');
+limitByInit('optionexteriormillworkdeckingcollection');
+limitByInit('optionexteriormillworkdeckingbrand');
+showPageLinks();
+showProducts();
+if(input_productDisplay.value=="") {
+	showHide('div_productControls', 'show');
+} else {
+	showHide('div_productControls', 'hide');
+}
+updateNewOrRe();
+
+if('{{ at_page }}'>'') {
+	goto('{{ at_page }}');
+}
+
+function setFormAction() {
+	var form = document.getElementById('form');
+	var action = form.action;
+	if(at_page.value > '') {
+		action = action.split('/page/')[0];
+		if(!(action.charAt(action.length-1)=='/')) {
+			action = action + '/';
+		}
+		action = action + 'page/' + at_page.value + '/';
+		form.action = action;
+	}
+}
+
+
+document.getElementById('button_draft').addEventListener('click', function(e) {
+	e.preventDefault();
+	document.getElementById('{{ form.status.id_for_label }}').value='{{ status_draft }}';
+	setFormAction();
+	document.getElementById('form').submit();
+});
+
+document.getElementById('button_submit').addEventListener('click', function(e) {
+	e.preventDefault();
+	document.getElementById('{{ form.status.id_for_label }}').value='{{ status_submitted }}';
+	setFormAction();
+	var submit_date=document.getElementById('{{ form.submit_date.id_for_label }}');
+	var d = new Date();
+	submit_date.value=d.getFullYear() +"-"+ (d.getMonth()+1) +"-"+ d.getDate();
+	document.getElementById('form').submit();
+});
+
+document.getElementById('div_productControls').addEventListener('change', function(e) {
+	showProducts();
+});
+
+document.getElementById("div_products").addEventListener('click', function(e) {
+	showPageLinks();
+	showProducts();
+});
+
+document.getElementById('form').addEventListener('change', function(e) {
+	formChanged=true;
+});
+
+document.getElementById('id_new_or_remodel').addEventListener('change', function(e) {
+	updateNewOrRe()
+});
+
+document.getElementById('input_productDisplay').addEventListener('click', function(e) {
+	showHide('div_productControls');
+	var productControls = document.getElementById('div_productControls');
+	if( productControls.style.display=='none') {
+		e.target.classList.remove('psuedodisabled');
+	}
+	else {
+		e.target.classList.add('psuedodisabled');
+	}
+});
+
+document.getElementById('input_productDisplay').addEventListener('keydown', function(e) {
+	showProducts();
+	showHide('div_productControls','show');
+	var productControls = document.getElementById('div_productControls');
+	if( productControls.style.display=='none') {
+		e.target.classList.remove('psuedodisabled');
+	}
+	else {
+		e.target.classList.add('psuedodisabled');
+	}
+});
+
+</script>
+
+
+
+

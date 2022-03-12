@@ -1,0 +1,49 @@
+<div class='formTabularRow'>
+    <div class="formFieldLabelTab">
+        {{ label }}
+    </div>
+    <div class="formFieldWidgetTab">
+        {% if field1.errors %}
+            <div class="formFieldErrorsTab">
+                {{ field1.errors }}
+            </div>
+        {% endif %}
+        <div class="formFieldWidgetTabWidget">
+            {{ field1 }} 
+        </div>
+    </div>
+    <div class="formFieldWidgetTab">
+        {% if field2.errors %}
+            <div class="formFieldErrorsTab">
+                {{ field2.errors }}
+            </div>
+        {% endif %}
+        <div class="formFieldWidgetTabWidget">
+            {{ field2 }} 
+        </div>
+    </div>
+    <div class="formFieldWidgetTab">
+        {% if field3.errors %}
+            <div class="formFieldErrorsTab">
+                {{ field3.errors }}
+            </div>
+        {% endif %}
+        <div class="formFieldWidgetTabWidget">
+            {{ field3 }} 
+        </div>
+    </div>
+    <div class="formFieldWidgetTab">
+        {% if field4.errors %}
+            <div class="formFieldErrorsTab">
+                {{ field4.errors }}
+            </div>
+        {% endif %}
+        <div class="formFieldWidgetTabWidget">
+            {{ field4 }} 
+        </div>
+    </div>
+</div>
+
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}

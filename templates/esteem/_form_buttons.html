@@ -1,0 +1,106 @@
+{% if not buttons > 0 %}
+	<div class="formFieldWrapper {{ wrapperclass }}" {{ wrapperattrs }}>
+		<div class="formFieldLabel">
+			{% if label %}
+				{{ label }}
+			{% else %}
+				&nbsp;
+			{% endif %}
+		</div>
+		<div class="formFieldWidgetWrapper {{ widgetwrapperclass }}" {{ widgetwrapperattrs }}>
+			<div class="formFieldWidget">
+                <button {% if type > '' %}type="{{ type }}" {% else %}type="submit" {% endif %}{% if id > '' %}id="{{ id }}" {% endif %}{% if name > '' %}name="{{ name }}" {% endif %}{% if value > '' %}value="{{ value }}" {% endif %}{% if class > '' %}class="{{ class }}" {% endif %}{{ attrs }} >{% if caption > '' %}{{ caption }}{% else %}Submit{% endif %}</button>
+			</div>
+		</div>
+	</div>
+{% elif buttons == 1 %}
+	<div class="formFieldWrapper {{ wrapperclass }}" {{ wrapperattrs }}>
+        <div class="formFieldLabel">
+            {% if label %}
+                {{ label }}
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+		<div class="formFieldWidgetWrapper {{ widgetwrapperclass }}" {{ widgetwrapperattrs }}>
+            {% if label1 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label1 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                <button {% if type1 > '' %}type="{{ type1 }}" {% else %}type="submit" {% endif %}{% if id1 > '' %}id="{{ id1 }}" {% endif %}{% if name1 > '' %}name="{{ name1 }}" {% endif %}{% if value1 > '' %}value="{{ value1 }}" {% endif %}{% if class1 > '' %}class="{{ class1 }}" {% endif %}{{ attrs }} >{% if caption1 > '' %}{{ caption1 }}{% else %}Submit{% endif %}</button>
+            </div>
+        </div>
+    </div>
+{% elif buttons == 2 %}
+	<div class="formFieldWrapper {{ wrapperclass }}" {{ wrapperattrs }}>
+        <div class="formFieldLabel">
+            {% if label %}
+                {{ label }}
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+		<div class="formFieldWidgetWrapper {{ widgetwrapperclass }}" {{ widgetwrapperattrs }}>
+            {% if label1 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label1 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+			    <button {% if type1 > '' %}type="{{ type1 }}" {% else %}type="submit" {% endif %}{% if id1 > '' %}id="{{ id1 }}" {% endif %}{% if name1 > '' %}name="{{ name1 }}" {% endif %}{% if value1 > '' %}value="{{ value1 }}" {% endif %}{% if class1 > '' %}class="{{ class1 }}" {% endif %}{{ attrs }} >{% if caption1 > '' %}{{ caption1 }}{% else %}Submit{% endif %}</button>
+            </div>
+            {% if label2 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label2 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+			    <button	{% if type2 > '' %}type="{{ type2 }}" {% else %}type="cancel" {% endif %}{% if id2 > '' %}id="{{ id2 }}" {% endif %}{% if name2 > '' %}name="{{ name2 }}" {% endif %}{% if value2 > '' %}value="{{ value2 }}" {% endif %}{% if class2 > '' %}class="{{ class2 }}" {% endif %}{{ attrs }} >{% if caption2 > '' %}{{ caption2 }}{% else %}Cancel{% endif %}</button>
+            </div>
+        </div>
+    </div>
+{% elif buttons == 3 %}
+	<div class="formFieldWrapper {{ wrapperclass }}" {{ wrapperattrs }}>
+        <div class="formFieldLabel">
+            {% if label %}
+                {{ label }}
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+		<div class="formFieldWidgetWrapper {{ widgetwrapperclass }}" {{ widgetwrapperattrs }}>
+            {% if label1 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label1 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+			    <button {% if type1 > '' %}type="{{ type1 }}" {% else %}type="submit" {% endif %}{% if id1 > '' %}id="{{ id1 }}" {% endif %}{% if name1 > '' %}name="{{ name1 }}" {% endif %}{% if value1 > '' %}value="{{ value1 }}" {% endif %}{% if class1 > '' %}class="{{ class1 }}" {% endif %}{{ attrs }} >{% if caption1 > '' %}{{ caption1 }}{% else %}Submit{% endif %}</button>
+            </div>
+            {% if label2 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label2 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+			    <button	{% if type2 > '' %}type="{{ type2 }}" {% else %}type="cancel" {% endif %}{% if id2 > '' %}id="{{ id2 }}" {% endif %}{% if name2 > '' %}name="{{ name2 }}" {% endif %}{% if value2 > '' %}value="{{ value2 }}" {% endif %}{% if class2 > '' %}class="{{ class2 }}" {% endif %}{{ attrs }} >{% if caption2 > '' %}{{ caption2 }}{% else %}Cancel{% endif %}</button>
+            </div>
+            {% if label3 %}
+                <div class="formFieldWidgetLabel">
+                    {{ label3 }}
+                </div>
+            {% endif %}
+            <div class="formFieldWidget">
+                <button	{% if type3 > '' %}type="{{ type3 }}" {% else %}type="cancel" {% endif %}{% if id3 > '' %}id="{{ id3 }}" {% endif %}{% if name3 > '' %}name="{{ name3 }}" {% endif %}{% if value3 > '' %}value="{{ value3 }}" {% endif %}{% if class3 > '' %}class="{{ class3 }}" {% endif %}{{ attrs }} >{% if caption3 > '' %}{{ caption3 }}{% else %}Cancel{% endif %}</button>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+{% comment %}
+# vim: ai et sts=4 sw=4 ts=4
+{% endcomment %}
+

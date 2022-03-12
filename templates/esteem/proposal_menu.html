@@ -1,0 +1,50 @@
+{% load esteem_extras %}
+<div class="menubar">
+  {% if thisview == "list" %}
+  {% else %}
+    <div class="menuitem">
+      <a href="{% url 'proposal_list' %}">List</a>
+    </div>
+  {% endif %}
+  {% if perms.esteem.add_proposal %}
+    {% if thisview == "create" %}
+    {% else %}
+      <div class="menuitem">
+        <a href="{% url 'proposal_create' %}">Create</a>
+      </div>
+    {% endif %}
+  {% endif %}
+  {% if perms.esteem.view_proposal %}
+    {% if thisview == "detail" %}
+    {% else %}
+      {% if object.pk %}
+        <div class="menuitem">
+          <a href="{% url 'proposal_detail' object.pk %}">Detail</a>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if perms.esteem.change_proposal %}
+    {% if thisview == "update" %}
+    {% else %}
+      {% if object.pk %}
+        {% can_change object request.user as can_change %}
+        {% if can_change %}
+          <div class="menuitem">
+            <a href="{% url 'proposal_update' object.pk %}">Edit</a>
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if perms.esteem.delete_proposal %}
+    {% if thisview == "delete" %}
+    {% else %}
+      {% if object.pk %}
+        <div class="menuitem">
+          <a href="{% url 'proposal_delete' object.pk %}">Delete</a>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+</div>

@@ -1,0 +1,13 @@
+{% load static %}
+<h2>Interior Millwork</h2>
+{% include './_detail_4labeltabular.html' with label1='Base' label2='Casing' label3='Crown' label4='Other/Coments' %}
+{% include './_detail_4fieldtabular.html' with field1=object.type1baselength field2=object.type1casinglength field3=object.type1crownlength field4=object.type1comments|linebreaks label="type 1"  %}
+{% include './_detail_4fieldtabular.html' with field1=object.type1basewidthsize field2=object.type1casingwidthsize field3=object.type1crownwidthsize field4=object.type1comments|linebreaks label="type 1"  %}
+{% include './_detail_4fieldtabular.html' with field1=object.type2baselength field2=object.type2casinglength field3=object.type2crownlength field4=object.type2comments|linebreaks label="type 1"  %}
+{% include './_detail_4fieldtabular.html' with field1=object.type2basewidthsize field2=object.type2casingwidthsize field3=object.type2crownwidthsize field4=object.type2comments|linebreaks label="type 1"  %}
+{% include './_detail_4fieldtabular.html' with field1=object.type3baselength field2=object.type3casinglength field3=object.type3crownlength field4=object.type3comments|linebreaks label="type 1"  %}
+{% include './_detail_4fieldtabular.html' with field1=object.type3basewidthsize field2=object.type3casingwidthsize field3=object.type3crownwidthsize field4=object.type3comments|linebreaks label="type 1"  %}
+{% include './_detail_4fieldtabular.html' with field1=object.casingdetails label="casing details" %}
+{% include './_detail_4fieldtabular.html' with field1=object.windowstoolskirt label="window stool skirt" %}
+{% include './_detail_4fieldtabular.html' with field1=object.pictureframe label="picture frame" %}
+				 

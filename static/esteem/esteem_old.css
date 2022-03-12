@@ -1,0 +1,271 @@
+html {
+	font-size:75%;
+	text-transform:uppercase;
+}
+
+body {
+	font-family: Calibri, Arial, Segoe ;
+}
+
+div.appHeader {
+	display:grid;
+	grid-template-columns:3fr 2fr;
+}
+
+div.appLogo {
+	height:80px;
+	display:block;
+	margin:auto;
+}
+
+div.appLogo img {
+	height:80%;
+}
+
+div.menubar {
+	display:grid;
+	grid-auto-columns:1fr;
+	width:100%;
+	margin-bottom:1em;
+}
+
+div.menuitem {
+	grid-column-start:auto;
+	grid-row-start:1;
+	text-align:center;
+}
+
+div.meuitem, div.menuitem a {
+}
+
+div.prevNext {
+	display:grid;
+	grid-auto-columns:1fr;
+	width:100%;
+	margin-bottom:1em;
+}
+
+div.prevNextItem {
+	grid-column-start:auto;
+	grid-row-start:1;
+	text-align:center;
+}
+
+div.prevNextItem {
+}
+
+div.page {
+	display:grid;
+	grid-template-columns:repeat(12, 1fr);
+}
+
+div.page > div {
+	grid-row:auto;
+	grid-column: auto / span 6;a
+}
+div.page > div.sectionCore {
+	grid-column: 2 / span 11;
+}
+
+div.sectionCore div.formFieldWrapper,
+div.sectionCore div.detailFieldWrapper {
+	display:grid;
+	grid-template-columns:1fr 4fr;
+}
+
+div.formFieldWrapper,
+div.detailFieldWrapper {
+	display:grid;
+	grid-template-columns:1fr 2fr;
+}
+
+div.form2FieldWrapper,
+div.detail2FieldWrapper {
+	display:grid;
+	grid-template-columns:2fr 2fr 2fr;
+}
+
+div.detailFieldWrapper {
+	margin:.5em;
+}
+
+div.pageTabular > div.sectionCore {
+	grid-column: auto / span 1;
+}
+
+div.pageTabular > div.sectionCore {
+	grid-column: auto / span 1;
+}
+
+/* Field Specific */
+
+div.page > div.sectionRequestnum {
+	grid-column: 1 / span 4;
+}
+
+div.page > div.sectionProducts{
+	grid-column: 2 / span 11;
+}
+
+div.subSection {
+	margin-left:3em;
+}
+
+
+div.formTabularRow,
+div.detailTabularRow,
+div.listTabularRow {
+	width:100%;
+	display:grid;
+	grid-auto-columns:1fr;
+}
+
+div.objectList div.listTabularRow{
+	grid-template-columns:repeat(12,1fr);
+}
+
+
+div.sectionProducts div.formFieldWrapper, 
+div.sectionProjects div.detailFieldWrapper 
+{
+	display:grid;
+	grid-template-columns:1fr 4fr;
+}
+
+div.sectionInteriorMillwork div.formTabularRow,
+div.sectionInteriorMillwork div.detailTabularRow {
+	display:grid;
+	grid-template-columns:1fr 1fr 1fr 1fr 2fr;
+	grid-auto-flow:column;
+}
+
+div.formTabularRow > div,
+div.detailTabularRow > div,
+div.listTabularRow > div,
+div.listTabularRow {
+	grid-column: auto / span 1;
+}
+
+div.formTabularRow > div.start2,
+div.detailTabularRow > div.start2,
+div.listTabularRow > div.start2 {
+	grid-column-start: 2;
+}
+div.formTabularRow > div.start3,
+div.detailTabularRow > div.start3,
+div.listTabularRow > div.start3 {
+	grid-column-start: 3;
+}
+div.formTabularRow > div.start4,
+div.detailTabularRow > div.start4,
+div.listTabularRow > div.start4 {
+	grid-column-start: 4;
+}
+div.formTabularRow > div.start5,
+div.detailTabularRow > div.start5,
+div.listTabularRow > div.start5 {
+	grid-column-start: 5;
+}
+
+div.formTabularRow > div.span2,
+div.detailTabularRow > div.span2,
+div.listTabularRow > div.span2 {
+	grid-column-end: span 2;
+}
+
+div.formTabularRow > div.span3,
+div.detailTabularRow > div.span3,
+div.listTabularRow > div.span3 {
+	grid-column-end: span 3;
+}
+
+div.formTabularRow > div.span4,
+div.detailTabularRow > div.span4,
+div.listTabularRow > div.span4 {
+	grid-column-end: span 4;
+}
+
+
+div.formTabularRow > div.label,
+div.detailTabularRow > div.label,
+div.listTabularRow > div.label {
+	padding-left:1em;
+}
+
+div.formTabularRow > div.value,
+div.detailTabularRow > div.value,
+div.listTabularRow > div.value {
+	padding-left:1em;
+	font-size:1.25em;
+}
+
+div.listTabularRow > div.cell {
+	padding-right:1em;
+	font-size:1.2em;
+}
+
+
+
+/* End Field Specific */
+
+
+input[type=text], select, option,  textarea {
+	width: 90%;
+	padding: 2px 1px;
+	margin: 2px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.detailFieldWidget {
+	font-size:125%;
+	width: 100%;
+}
+
+/* color */
+div.appHeader {
+}
+
+div.menubar, div.prevNext, div.menubar a, div.prevNext a {
+	color:white;
+}
+
+div.menuitem {
+
+	background-color:#016f12;
+}
+
+div.prevNext {
+	background-color:#016f12;
+	color:white;
+}
+
+div.prevNextItem {
+	background-color:#016f12;
+}
+
+div.prevNextItem {
+	color:white;
+}
+
+div.formTabularRow:nth-child(odd),
+div.detailTabularRow:nth-child(even) {
+	background-color:#ccffcc;
+}
+
+/* end color */
+
+@media only screen and (min-width: 700px){
+	html {
+		font-size:1.1em;
+	}
+	div.appLogo {
+		height:100px;
+	}
+	div.appLogo img {
+		height:100%;
+	}
+}
+
