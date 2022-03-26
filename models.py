@@ -223,6 +223,15 @@ class Estirequest(models.Model):
                 for assignment in self.assignment_set.all():
                     if user == assignment.salesperson.user:
                         return True
+            if user.groups.filter(name="Esteem_SalespersonAssociates").exists():
+                for assignment in self.assignment_set.all():
+                    if user == assignment.salesperson.user:
+                        return True
+
+
+
+
+
 
 
 class EstirequestDocument(models.Model):
@@ -828,6 +837,7 @@ class Proposal(models.Model):
     amount = models.DecimalField('Amount',  decimal_places=2, blank=True, help_text='What is the amount of the proposal?', max_digits=10, null=True)
     estimator = models.ForeignKey(Estimator, blank=True, help_text='Who submitted this proposal?', null=True, on_delete=models.PROTECT)
     create_date = models.DateField('date', blank=True, default=date.today, help_text='When was this proposal created?')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='created by', null=True, on_delete=models.PROTECT, help_text="The user who submitted the proposal")
     update_date = models.DateField('updated', blank=True, auto_now=True, help_text='When was this proposal created?')
     uploadedfile = models.FileField('file', upload_to='documents/', blank=True, null=True)
     comments = models.TextField('comments', blank=True, help_text='What are comments for this proposal?')
