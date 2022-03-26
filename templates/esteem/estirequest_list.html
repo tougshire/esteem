@@ -5,7 +5,7 @@
 {% block objectheader %}
 <div class="objectTitle"><h2>Estimate Requests</h2></div>
 {% endblock %}
-{% block objectmenu %} 
+{% block objectmenu %}
     {% include './estirequest_menu.html' with thisview='list' %}
 {% endblock %}
 {% block content %}
@@ -21,7 +21,7 @@
                         {{ recall_estirequest_query_form.recall_estirequest_query }}
                     </div>
                     <div class="queryFieldOperator">
-                        <button>Recall</button> 
+                        <button>Recall</button>
                     </div>
 
                     <div class="queryFieldLabel">
@@ -101,7 +101,7 @@
         Filtered: {{ filter_display }}
     </div>
     {% endif %}
-    {% endcomment %}                    
+    {% endcomment %}
     {% if object_list %}
     <div class="objectList">
         <div class="listTabularRow">
@@ -142,11 +142,13 @@
                             {% if can_view  %}
                                 <a href="{% url 'proposal_detail' proposal.pk %}">
                             {% endif %}
-                            {{ proposal.create_date|date:"d/m" }} 
-                            {% if proposal.component %}, 
+                            {{ proposal.create_date|date:"d/m" }}
+                            {% if proposal.component %},
                                 {{ proposal.component|truncatechars:"10" }}
                             {% endif %}
+                            {% if not request.user|has_group:"Esteem_SalespersonAssociates" %}
                             {{ proposal.amount|rjust:10 }}
+                            {% endif %}
                             {% if can_view %}
                                 </a>
                             {% endif %}
