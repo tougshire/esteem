@@ -23,9 +23,7 @@ class SelectWithBrand(forms.Select):
             option['attrs']['data-' + self.limitby ] = getattr(value.instance, self.limitby).pk
             if hasattr(value.instance, "sample"):
                 img = getattr(value.instance, "sample")
-                print('tp m3ga05', getattr(value.instance, "sample"), getattr(value.instance, "sample").__class__)
                 if img:
-                    print('tp m3ga11', getattr(value.instance, "sample").url)
                     option['attrs']['data-sample'] = getattr(value.instance, "sample").url
 
         return option
