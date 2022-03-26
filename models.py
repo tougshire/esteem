@@ -12,8 +12,15 @@ YESNO=(
 )
 
 class Estimator(models.Model):
-    name = models.CharField('name', blank=True, help_text='What is the name of the estimator', max_length=200 )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, help_text='Who is the user associated with this estimator?', null=True, on_delete=models.PROTECT)
+    name = models.CharField(
+        'name',
+        blank=True,
+        help_text='What is the name of the estimator',
+        max_length=200
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, help_text='Who is the user associated with this estimator?', null=True, on_delete=models.PROTECT
+    )
 
     def __str__(self):
         return self.name
@@ -26,18 +33,53 @@ class Estimator(models.Model):
         verbose_name = 'estimator'
 
 class Customer(models.Model):
-    name = models.CharField('name', blank=True, help_text='What is the customer\'s name?', max_length=200)
-    email = models.EmailField('email', blank=True, help_text='What is the customer\'s primary email address?', max_length=300)
-    phone = models.CharField('phone', blank=True, help_text='What is the customer\'s primary phone number?', max_length=200)
-    additional_contact = models.TextField('additional contact information', blank=True, help_text='What is the contact information other than primary email and primary phone?')
-    is_type_commercialgc = models.BooleanField('Commercial GC', blank=True, default=False, help_text='Is this customer a general contractor?')
-    is_type_builder = models.BooleanField('builder', blank=True, default=False, help_text='Is this customer a builder?')
-    is_type_remodeler = models.BooleanField('remodeler', blank=True, default=False, help_text='Is this customer a remodeler?')
-    is_type_homeowner = models.BooleanField('homeowner', blank=True, default=False, help_text='Is this customer a homeowner?')
-    billing_address = models.TextField('billing address', blank=True, help_text='What is the customer\'s billing address?')
-    archived=models.CharField('archived', choices=YESNO, default='N', help_text='Should this customer be removed from the list of active customers?', max_length=1)
-    business_card=models.FileField('business card', blank=True, help_text='What is this customer\'s business card?', null=True)
-    custom_logo = models.FileField('logo', blank=True, help_text='For salespeople who work for this customer, what logo will be displayed?', null=True)
+    name = models.CharField(
+        'name',
+        blank=True,
+        help_text='What is the customer\'s name?',
+        max_length=200
+    )
+    email = models.EmailField(
+        'email',
+        blank=True,
+        help_text='What is the customer\'s primary email address?',
+        max_length=300
+    )
+    phone = models.CharField(
+        'phone',
+        blank=True,
+        help_text='What is the customer\'s primary phone number?',
+        max_length=200
+    )
+    additional_contact = models.TextField(
+        'additional contact information',
+        blank=True,
+        help_text='What is the contact information other than primary email and primary phone?'
+    )
+    is_type_commercialgc = models.BooleanField(
+        'Commercial GC', blank=True, default=False, help_text='Is this customer a general contractor?'
+    )
+    is_type_builder = models.BooleanField(
+        'builder', blank=True, default=False, help_text='Is this customer a builder?'
+    )
+    is_type_remodeler = models.BooleanField(
+        'remodeler', blank=True, default=False, help_text='Is this customer a remodeler?'
+    )
+    is_type_homeowner = models.BooleanField(
+        'homeowner', blank=True, default=False, help_text='Is this customer a homeowner?'
+    )
+    billing_address = models.TextField(
+        'billing address', blank=True, help_text='What is the customer\'s billing address?'
+    )
+    archived=models.CharField(
+        'archived', choices=YESNO, default='N', help_text='Should this customer be removed from the list of active customers?', max_length=1
+    )
+    business_card=models.FileField(
+        'business card', blank=True, help_text='What is this customer\'s business card?', null=True
+    )
+    custom_logo = models.FileField(
+        'logo', blank=True, help_text='For salespeople who work for this customer, what logo will be displayed?', null=True
+    )
 
     def __str__(self):
         return self.name
@@ -94,9 +136,15 @@ class Customer(models.Model):
 
 
 class Salesperson(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, help_text='Who is the user associated with this sales person?', null=True, on_delete=models.PROTECT)
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is he name of the salesperson')
-    associated_customer = models.ForeignKey(Customer, blank=True, help_text='If this salesperson works for a customer, who is this sales person\'s associated customer?', null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, help_text='Who is the user associated with this sales person?', null=True, on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is he name of the salesperson'
+    )
+    associated_customer = models.ForeignKey(
+        Customer, blank=True, help_text='If this salesperson works for a customer, who is this sales person\'s associated customer?', null=True, on_delete=models.SET_NULL
+    )
 
     def __str__(self):
         return self.name
@@ -129,23 +177,55 @@ class Estirequest(models.Model):
         (NR_RE, 'Remodel'),
     )
 
-    name = models.CharField('project name', max_length=200, blank=True, help_text='What is the project\'s name?')
-    requestnum = models.CharField('est.req#', blank=True, help_text='What is the estimate request number?', max_length=20, unique=True)
-    new_or_remodel = models.CharField('new/remodel', max_length=2, choices=NR_CHOICES, default=NR_NEW, help_text='Is this a new construction or a remodel?')
-    customer = models.ForeignKey(Customer, blank=True, help_text='Who is the customer for this project?', null=True, on_delete=models.PROTECT)
-    address = models.CharField('address/lot', max_length=200, blank=True, help_text='What is the project\'s street address or lot number?')
-    citystzip = models.CharField('city, state, zip', max_length=200, blank=True, help_text='What is the project\'s city, state and zip?')
-    create_date = models.DateField('date', blank=True, default=date.today, help_text='What is the date that this request was created?')
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='created by', null=True, on_delete=models.PROTECT, help_text="The user who submitted the request")
-    submit_date = models.DateField('date', blank=True, help_text='What is the date that this request was submitted for estimate?', null=True)
-    status = models.CharField('status', max_length=2, choices=STATUS_CHOICES, default=STATUS_DRAFT, help_text='What is the status of this request')
-    comments = models.TextField('comments for estimator', blank=True, help_text='What are comments for this request?')
-    has_windows = models.BooleanField('windows', default=False, help_text='Does this project have windows?')
-    has_doors = models.BooleanField('non-Marvin doors', default=False, help_text='Does this project have doors?')
-    has_marvindoors = models.BooleanField('marvin doors', default=False, help_text='Does this project have Marvin doors?')
-    has_icfs = models.BooleanField('icf', default=False, help_text='Does this project have ICF?')
-    has_interiormillworks = models.BooleanField('interior millwork', default=False, help_text='Does this project have Interior Millwork?')
-    has_exteriormillworks = models.BooleanField('exterior millwork', default=False, help_text='Does this project have Exterior Millwork?')
+    name = models.CharField(
+        'project name', max_length=200, blank=True, help_text='What is the project\'s name?'
+    )
+    requestnum = models.CharField(
+        'est.req#', blank=True, help_text='What is the estimate request number?', max_length=20, unique=True
+    )
+    new_or_remodel = models.CharField(
+        'new/remodel', max_length=2, choices=NR_CHOICES, default=NR_NEW, help_text='Is this a new construction or a remodel?'
+    )
+    customer = models.ForeignKey(Customer, blank=True, help_text='Who is the customer for this project?', null=True, on_delete=models.PROTECT
+    )
+    address = models.CharField(
+        'address/lot', max_length=200, blank=True, help_text='What is the project\'s street address or lot number?'
+    )
+    citystzip = models.CharField(
+        'city, state, zip', max_length=200, blank=True, help_text='What is the project\'s city, state and zip?'
+    )
+    create_date = models.DateField(
+        'date', blank=True, default=date.today, help_text='What is the date that this request was created?'
+    )
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='created by', null=True, on_delete=models.PROTECT, help_text="The user who submitted the request"
+    )
+    submit_date = models.DateField(
+        'date', blank=True, help_text='What is the date that this request was submitted for estimate?', null=True
+    )
+    status = models.CharField(
+        'status', max_length=2, choices=STATUS_CHOICES, default=STATUS_DRAFT, help_text='What is the status of this request'
+    )
+    comments = models.TextField(
+        'comments for estimator', blank=True, help_text='What are comments for this request?'
+    )
+    has_windows = models.BooleanField(
+        'windows', default=False, help_text='Does this project have windows?'
+    )
+    has_doors = models.BooleanField(
+        'non-Marvin doors', default=False, help_text='Does this project have doors?'
+    )
+    has_marvindoors = models.BooleanField(
+        'marvin doors', default=False, help_text='Does this project have Marvin doors?'
+    )
+    has_icfs = models.BooleanField(
+        'icf', default=False, help_text='Does this project have ICF?'
+    )
+    has_interiormillworks = models.BooleanField(
+        'interior millwork', default=False, help_text='Does this project have Interior Millwork?'
+    )
+    has_exteriormillworks = models.BooleanField(
+        'exterior millwork', default=False, help_text='Does this project have Exterior Millwork?'
+    )
 
     class Meta:
         ordering = ('-create_date', '-submit_date', 'name',)
@@ -241,8 +321,12 @@ class EstirequestDocument(models.Model):
         on_delete=models.CASCADE,
         help_text='What is the request to which this document is attached?'
     )
-    title = models.CharField('title', max_length = 200, blank=True, help_text='What is this documents title?')
-    uploadedfile = models.FileField(upload_to='documents/', blank=True, null=True)
+    title = models.CharField(
+        'title', max_length = 200, blank=True, help_text='What is this documents title?'
+    )
+    uploadedfile = models.FileField(
+        upload_to='documents/', blank=True, null=True
+    )
 
     def __str__(self):
         return self.title
@@ -255,7 +339,9 @@ class EstirequestDocument(models.Model):
         verbose_name = 'estimate request document'
 
 class OptionDoorBrand(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this brand?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this brand?'
+    )
 
     def __str__(self):
         return self.name
@@ -274,7 +360,9 @@ class OptionDoorExteriorColor(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this color?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this color?'
+    )
     sample = models.ImageField(
         'Sample',
         blank=True,
@@ -296,8 +384,11 @@ class OptionDoorInteriorFinish(models.Model):
         blank=True,
         help_text='What is the brand to which this options applies?',
         null=True,
-        on_delete=models.PROTECT)
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+        on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this finish?'
+    )
 
     def __str__(self):
         return self.name
@@ -313,8 +404,11 @@ class OptionDoorHardwareFinish(models.Model):
         blank=True,
         help_text='What is the brand to which this options applies?',
         null=True,
-        on_delete=models.PROTECT)
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+        on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this finish?'
+    )
 
     def __str__(self):
         return self.name
@@ -333,7 +427,9 @@ class OptionDoorScreen(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of screen?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of screen?'
+    )
 
     def __str__(self):
         return self.name
@@ -351,7 +447,8 @@ class OptionDoorShade(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of shade?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of shade?')
 
     def __str__(self):
         return self.name
@@ -369,7 +466,9 @@ class OptionDoorLockSensor(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of sensor?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of sensor?'
+    )
 
     def __str__(self):
         return self.name
@@ -379,7 +478,9 @@ class OptionDoorLockSensor(models.Model):
         verbose_name = 'option door lock sensor'
 
 class OptionMarvinDoorBrand(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this brand?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this brand?'
+    )
 
     def __str__(self):
         return self.name
@@ -394,8 +495,11 @@ class OptionMarvinDoorExteriorColor(models.Model):
         verbose_name='door brand',
         blank=True, help_text='What is the brand to which this options applies?',
         null=True,
-        on_delete=models.PROTECT)
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this color?')
+        on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this color?'
+    )
     sample = models.ImageField(
         'Sample',
         blank=True,
@@ -413,8 +517,11 @@ class OptionMarvinDoorInteriorSpecies(models.Model):
     optionmarvindoorbrand = models.ForeignKey(
         OptionMarvinDoorBrand,
         verbose_name = "door brand",
-        blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this species?')
+        blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this species?'
+    )
 
     def __str__(self):
         return self.name
@@ -432,7 +539,9 @@ class OptionMarvinDoorInteriorFinish(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this finish?'
+    )
 
     def __str__(self):
         return self.name
@@ -450,7 +559,9 @@ class OptionMarvinDoorHardwareFinish(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this finish?'
+    )
 
     def __str__(self):
         return self.name
@@ -467,8 +578,11 @@ class OptionMarvinDoorHardwareStyle(models.Model):
         help_text='What is the brand to which this options applies?',
         null=True,
         on_delete=models.PROTECT
+
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this style?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this style?'
+    )
 
     def __str__(self):
         return self.name
@@ -486,7 +600,9 @@ class OptionMarvinDoorScreen(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of screen?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of screen?'
+    )
 
     def __str__(self):
         return self.name
@@ -504,7 +620,9 @@ class OptionMarvinDoorShade(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of shade?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of shade?'
+    )
 
     def __str__(self):
         return self.name
@@ -522,7 +640,9 @@ class OptionMarvinDoorLockSensor(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of sensor?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of sensor?'
+    )
 
     def __str__(self):
         return self.name
@@ -532,7 +652,9 @@ class OptionMarvinDoorLockSensor(models.Model):
         verbose_name = 'option marvin door lock sensor'
 
 class OptionWindowBrand(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this brand?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this brand?'
+    )
 
     def __str__(self):
         return self.name
@@ -550,7 +672,15 @@ class OptionWindowExteriorColor(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this color?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this color?'
+    )
+    sample = models.ImageField(
+        'Sample',
+        blank=True,
+        null=True,
+        help_text="What is a sample of the color?"
+    )
 
     def __str__(self):
         return self.name
@@ -568,7 +698,9 @@ class OptionWindowInteriorFinish(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this finish?'
+    )
 
     def __str__(self):
         return self.name
@@ -587,7 +719,9 @@ class OptionWindowInteriorSpecies(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this finish?'
+    )
 
     def __str__(self):
         return self.name
@@ -606,7 +740,9 @@ class OptionWindowHardwareFinish(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this finish?'
+    )
 
     def __str__(self):
         return self.name
@@ -624,8 +760,11 @@ class OptionWindowScreen(models.Model):
         help_text='What is the brand to which this options applies?',
         null=True,
         on_delete=models.PROTECT
+
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of screen?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of screen?'
+    )
 
     def __str__(self):
         return self.name
@@ -643,7 +782,9 @@ class OptionWindowShade(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of shade?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of shade?'
+    )
 
     def __str__(self):
         return self.name
@@ -662,7 +803,9 @@ class OptionWindowLockSensor(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of sensor?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this type of sensor?'
+    )
 
     def __str__(self):
         return self.name
@@ -672,8 +815,12 @@ class OptionWindowLockSensor(models.Model):
         verbose_name = 'option window lock sensor'
 
 class OptionICFWallThickness(models.Model):
-    name = models.CharField('label', max_length=10, blank=True, help_text='What is the label to describe this thickness?')
-    inches = models.IntegerField('inches', default=0, help_text='What is the thickness in inches?')
+    name = models.CharField(
+        'label', max_length=10, blank=True, help_text='What is the label to describe this thickness?'
+    )
+    inches = models.IntegerField(
+        'inches', default=0, help_text='What is the thickness in inches?'
+    )
 
     def __str__(self):
         return self.name
@@ -683,7 +830,9 @@ class OptionICFWallThickness(models.Model):
         ordering = ['inches',]
 
 class OptionInteriorMillworkPrimarySpecies(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this species?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this species?'
+    )
 
     def __str__(self):
         return self.name
@@ -693,7 +842,9 @@ class OptionInteriorMillworkPrimarySpecies(models.Model):
         verbose_name = 'option interior millwork primary species'
 
 class OptionInteriorMillworkTreadSpecies(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this species?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this species?'
+    )
 
     def __str__(self):
         return self.name
@@ -704,7 +855,9 @@ class OptionInteriorMillworkTreadSpecies(models.Model):
 
 
 class OptionInteriorMillworkRiserSpecies(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this species?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this species?'
+    )
 
     def __str__(self):
         return self.name
@@ -714,7 +867,9 @@ class OptionInteriorMillworkRiserSpecies(models.Model):
         verbose_name = 'option interior millwork riser species'
 
 class OptionExteriorMillworkRailingStyle(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this style?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this style?'
+    )
 
     def __str__(self):
         return self.name
@@ -724,9 +879,12 @@ class OptionExteriorMillworkRailingStyle(models.Model):
         verbose_name = 'option exterior millwork railing style'
 
 class OptionExteriorMillworkDeckingBrand(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this material?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this material?'
+    )
 
-    def __str__(self):
+    def __str__(self
+    ):
         return self.name
 
     class Meta:
@@ -735,7 +893,9 @@ class OptionExteriorMillworkDeckingBrand(models.Model):
 
 
 class OptionExteriorMillworkDeckingGrooves(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this groove option?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this groove option?'
+    )
 
     def __str__(self):
         return self.name
@@ -753,7 +913,9 @@ class OptionExteriorMillworkDeckingCollection(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this collection?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this collection?'
+    )
 
     def __str__(self):
         return self.name
@@ -763,12 +925,20 @@ class OptionExteriorMillworkDeckingCollection(models.Model):
         verbose_name = 'option exterior millwork decking collection'
 
 class OptionExteriorMillworkDeckingColor(models.Model):
-    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this color?')
+    name = models.CharField(
+        'name', max_length=200, blank=True, help_text='What is the name of this color?'
+    )
     optionexteriormillworkdeckingcollection = models.ForeignKey(
         OptionExteriorMillworkDeckingCollection,
         verbose_name="decking collection",
-        blank=True, help_text='What is the decking collection for which this color is an option?', null=True, on_delete=models.SET_NULL)
-
+        blank=True, help_text='What is the decking collection for which this color is an option?', null=True, on_delete=models.SET_NULL
+    )
+    sample = models.ImageField(
+        'Sample',
+        blank=True,
+        null=True,
+        help_text="What is a sample of the color?"
+    )
     def __str__(self):
         return self.name
 
@@ -784,35 +954,58 @@ class EstisheetDoor(models.Model):
         (NR_NEW, 'New Construction'),
         (NR_RE, 'Replacement'),
     )
-    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For which request is this sheet?')
-    new_or_replacement = models.CharField('new/replacement', max_length=2, blank=True, choices=NR_CHOICES, help_text='Is this door a new installation or a replacement?', null=True)
+    estirequest = models.ForeignKey(
+        Estirequest, on_delete=models.CASCADE, help_text='For which request is this sheet?'
+    )
+    new_or_replacement = models.CharField(
+        'new/replacement', max_length=2, blank=True, choices=NR_CHOICES, help_text='Is this door a new installation or a replacement?', null=True)
     optiondoorbrand = models.ForeignKey(
         OptionDoorBrand,
         verbose_name="door brand",
-        null=True, blank=True, help_text='What is the brand of these doors?', on_delete=models.PROTECT)
-    model_number = models.CharField('model number', max_length=200, blank=True, help_text='What is the model number of this door?')
-    size = models.CharField('size', max_length=20, blank=True, help_text='What is the size of door?')
-    handing = models.CharField('handing', max_length=200, blank=True, help_text='What are the handing and other considerations for this door?')
-    transom_height = models.CharField('transom height', max_length=200, blank=True, help_text='What is the height of the transom?' )
+        null=True, blank=True, help_text='What is the brand of these doors?', on_delete=models.PROTECT
+    )
+    model_number = models.CharField(
+        'model number', max_length=200, blank=True, help_text='What is the model number of this door?'
+    )
+    size = models.CharField(
+        'size', max_length=20, blank=True, help_text='What is the size of door?'
+    )
+    handing = models.CharField(
+        'handing', max_length=200, blank=True, help_text='What are the handing and other considerations for this door?'
+    )
+    transom_height = models.CharField(
+        'transom height', max_length=200, blank=True, help_text='What is the height of the transom?'
+    )
     optionexterior_color = models.ForeignKey(
         OptionDoorExteriorColor,
-        verbose_name='exterior color', blank=True, help_text='what is the exterior color of these doors?', null=True, on_delete=models.PROTECT)
+        verbose_name='exterior color', blank=True, help_text='what is the exterior color of these doors?', null=True, on_delete=models.PROTECT
+    )
     optioninterior_finish = models.ForeignKey(
         OptionDoorInteriorFinish,
-        verbose_name='interior finish', blank=True, help_text='what is the interior finish of these doors?', null=True, on_delete=models.PROTECT)
+        verbose_name='interior finish', blank=True, help_text='what is the interior finish of these doors?', null=True, on_delete=models.PROTECT
+    )
     optionhardware_finish = models.ForeignKey(
         OptionDoorHardwareFinish,
-        verbose_name='hardware finish', blank=True, help_text='what is the hardware finish of these doors?', null=True, on_delete=models.PROTECT)
-    optionhardware_style = models.CharField('hardware style', max_length=50, blank=True, help_text='What is the hardware style of these doors?')
+        verbose_name='hardware finish', blank=True, help_text='what is the hardware finish of these doors?', null=True, on_delete=models.PROTECT
+    )
+    optionhardware_style = models.CharField(
+        'hardware style', max_length=50, blank=True, help_text='What is the hardware style of these doors?'
+    )
     optionscreen = models.ForeignKey(
         OptionDoorScreen,
         verbose_name="screens",
-        null=True, blank=True, help_text='What screens are included with these doors?', on_delete=models.PROTECT)
+        null=True, blank=True, help_text='What screens are included with these doors?', on_delete=models.PROTECT
+    )
     optionshades = models.ForeignKey(
         OptionDoorShade,
-        verbose_name='shades', blank=True, help_text='what shades are included with these doors?', null=True, on_delete=models.PROTECT)
-    optionlock_sensors = models.BooleanField('lock sensors', default=False, help_text='Do these doors have lock sensors?')
-    comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?')
+        verbose_name='shades', blank=True, help_text='what shades are included with these doors?', null=True, on_delete=models.PROTECT
+    )
+    optionlock_sensors = models.BooleanField(
+        'lock sensors', default=False, help_text='Do these doors have lock sensors?'
+    )
+    comments = models.TextField(
+        'comments', blank=True, help_text='What are comments for this estimate?'
+    )
 
     def __str__(self):
         return 'Non-Marvin Doors for ' + self.estirequest
@@ -829,33 +1022,47 @@ class EstisheetMarvinDoor(models.Model):
         (NR_NEW, 'New Construction'),
         (NR_RE, 'Replacement'),
     )
-    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For what request is this sheet?')
-    new_or_replacement = models.CharField('new/replacement', max_length=2, blank=True, choices=NR_CHOICES, help_text='Is this door a new installation or a replacement?', null=True)
+    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For what request is this sheet?'
+    )
+    new_or_replacement = models.CharField(
+        'new/replacement', max_length=2, blank=True, choices=NR_CHOICES, help_text='Is this door a new installation or a replacement?', null=True
+    )
     optionexterior_color = models.ForeignKey(
         OptionMarvinDoorExteriorColor,
-        verbose_name='exterior color', blank=True, help_text='what is the exterior color of these doors?', null=True, on_delete=models.PROTECT)
+        verbose_name='exterior color', blank=True, help_text='what is the exterior color of these doors?', null=True, on_delete=models.PROTECT
+    )
     optionmarvindoorbrand = models.ForeignKey(
         OptionMarvinDoorBrand,
         verbose_name="door brand",
-        null=True, blank=True, help_text='What is the brand of these doors?', on_delete=models.PROTECT)
+        null=True, blank=True, help_text='What is the brand of these doors?', on_delete=models.PROTECT
+    )
     optioninterior_finish = models.ForeignKey(
         OptionMarvinDoorInteriorFinish,
-        verbose_name='interior finish', blank=True, help_text='what is the interior finish of these doors?', null=True, on_delete=models.PROTECT)
+        verbose_name='interior finish', blank=True, help_text='what is the interior finish of these doors?', null=True, on_delete=models.PROTECT
+    )
     optionhardware_style = models.ForeignKey(
         OptionMarvinDoorHardwareStyle,
-        verbose_name='hardware style', blank=True, help_text='what is the hardware style of these doors?', null=True, on_delete=models.PROTECT)
+        verbose_name='hardware style', blank=True, help_text='what is the hardware style of these doors?', null=True, on_delete=models.PROTECT
+    )
     optionhardware_finish = models.ForeignKey(
         OptionMarvinDoorHardwareFinish,
-        verbose_name='hardware finish', blank=True, help_text='what is the hardware finish of these doors?', null=True, on_delete=models.PROTECT)
+        verbose_name='hardware finish', blank=True, help_text='what is the hardware finish of these doors?', null=True, on_delete=models.PROTECT
+    )
     optionscreens = models.ForeignKey(
         OptionMarvinDoorScreen,
         verbose_name="screens",
-        null=True, blank=True, help_text='What screens are included with these doors?', on_delete=models.PROTECT)
+        null=True, blank=True, help_text='What screens are included with these doors?', on_delete=models.PROTECT
+    )
     optionshades = models.ForeignKey(
         OptionMarvinDoorShade,
-        verbose_name='shades', blank=True, help_text='what shades are included with these doors?', null=True, on_delete=models.PROTECT)
-    optionlock_sensors = models.BooleanField('lock sensors', default=False, help_text='Do these doors have lock sensors?')
-    comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?')
+        verbose_name='shades', blank=True, help_text='what shades are included with these doors?', null=True, on_delete=models.PROTECT
+    )
+    optionlock_sensors = models.BooleanField(
+        'lock sensors', default=False, help_text='Do these doors have lock sensors?'
+    )
+    comments = models.TextField(
+        'comments', blank=True, help_text='What are comments for this estimate?'
+    )
 
     def __str__(self):
         return 'Marvin-Doors for ' + self.estirequest
@@ -872,21 +1079,29 @@ class EstisheetWindow(models.Model):
         (NR_NEW, 'New Construction'),
         (NR_RE, 'Replacement'),
     )
-    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For what request is this sheet?')
-    new_or_replacement = models.CharField('new/replacement', max_length=2, blank=True, choices=NR_CHOICES, help_text='Is this window a new installation or a replacement?', null=True)
+    estirequest = models.ForeignKey(
+        Estirequest, on_delete=models.CASCADE, help_text='For what request is this sheet?'
+    )
+    new_or_replacement = models.CharField(
+        'new/replacement', max_length=2, blank=True, choices=NR_CHOICES, help_text='Is this window a new installation or a replacement?', null=True
+    )
     optionwindowbrand = models.ForeignKey(
         OptionWindowBrand,
         verbose_name="window brand",
-        null=True, blank=True, help_text='What is the brand of these windows?', on_delete=models.PROTECT)
+        null=True, blank=True, help_text='What is the brand of these windows?', on_delete=models.PROTECT
+    )
     optionexterior_color = models.ForeignKey(
         OptionWindowExteriorColor,
-        verbose_name='exterior color', blank=True, help_text='what is the exterior color of these windows?', null=True, on_delete=models.PROTECT)
+        verbose_name='exterior color', blank=True, help_text='what is the exterior color of these windows?', null=True, on_delete=models.PROTECT
+    )
     optioninterior_finish = models.ForeignKey(
         OptionWindowInteriorFinish,
-        verbose_name='interior finish', blank=True, help_text='what is the interior finish of these windows?', null=True, on_delete=models.PROTECT)
+        verbose_name='interior finish', blank=True, help_text='what is the interior finish of these windows?', null=True, on_delete=models.PROTECT
+    )
     optionhardware_finish = models.ForeignKey(
         OptionWindowHardwareFinish,
-        verbose_name='hardware finish', blank=True, help_text='what is the hardware finish of these windows?', null=True, on_delete=models.PROTECT)
+        verbose_name='hardware finish', blank=True, help_text='what is the hardware finish of these windows?', null=True, on_delete=models.PROTECT
+    )
     optionscreen = models.ForeignKey(
         OptionWindowScreen,
         verbose_name="screens",
@@ -903,8 +1118,12 @@ class EstisheetWindow(models.Model):
         null=True,
         on_delete=models.PROTECT
     )
-    optionlock_sensors = models.BooleanField('lock sensors', default=False, help_text='Do these windows have lock sensors?')
-    comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?')
+    optionlock_sensors = models.BooleanField(
+        'lock sensors', default=False, help_text='Do these windows have lock sensors?'
+    )
+    comments = models.TextField(
+        'comments', blank=True, help_text='What are comments for this estimate?'
+    )
 
     def __str__(self):
         return 'Windows for ' + self.estirequest
@@ -921,28 +1140,47 @@ class EstisheetICF(models.Model):
         (NR_NEW, 'New Construction'),
         (NR_RE, 'Replacement'),
     )
-    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For what request is this sheet?')
+    estirequest = models.ForeignKey(
+        Estirequest, on_delete=models.CASCADE, help_text='For what request is this sheet?'
+    )
     optionbthickness = models.ForeignKey(
         OptionICFWallThickness,
-        verbose_name='basement wall thickness', blank=True, help_text='what is the basement wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfbwall0')
+        verbose_name='basement wall thickness', blank=True, help_text='what is the basement wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfbwall0'
+    )
     option0thickness = models.ForeignKey(
         OptionICFWallThickness,
-        verbose_name='foundation wall thickness', blank=True, help_text='what is the foundation wall thickness?', null=True, on_delete=models.PROTECT, related_name='icf0wall0')
+        verbose_name='foundation wall thickness', blank=True, help_text='what is the foundation wall thickness?', null=True, on_delete=models.PROTECT, related_name='icf0wall0'
+    )
     option1thickness = models.ForeignKey(
         OptionICFWallThickness,
-        verbose_name='1st floor wall thickness', blank=True, help_text='what is the first floor wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfwall1')
+        verbose_name='1st floor wall thickness', blank=True, help_text='what is the first floor wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfwall1'
+    )
     option2thickness = models.ForeignKey(
         OptionICFWallThickness,
-        verbose_name='2nd floor wall thickness', blank=True, help_text='what is the second floor wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfwall2')
+        verbose_name='2nd floor wall thickness', blank=True, help_text='what is the second floor wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfwall2'
+    )
     option3thickness = models.ForeignKey(
         OptionICFWallThickness,
-        verbose_name='3rd floor wall thickness', blank=True, help_text='what is the third floor wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfwall3')
-    optionpargecoating = models.CharField('foundation parge coating', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include foundation parge coating?', null=True)
-    optionbgmembrane = models.CharField('below grade membrane', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include below grade membrane?', null=True)
-    optionslabinsulation = models.CharField('slab on grade insullation', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include slab on grade insullation?', null=True)
-    optionfloor = models.CharField('ICF floor system', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include an ICF floor system?', null=True)
-    optionroof = models.CharField('ICF roof system', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include an ICF roof system?', null=True)
-    comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?')
+        verbose_name='3rd floor wall thickness', blank=True, help_text='what is the third floor wall thickness?', null=True, on_delete=models.PROTECT, related_name='icfwall3'
+    )
+    optionpargecoating = models.CharField(
+        'foundation parge coating', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include foundation parge coating?', null=True
+    )
+    optionbgmembrane = models.CharField(
+        'below grade membrane', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include below grade membrane?', null=True
+    )
+    optionslabinsulation = models.CharField(
+        'slab on grade insullation', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include slab on grade insullation?', null=True
+    )
+    optionfloor = models.CharField(
+        'ICF floor system', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include an ICF floor system?', null=True
+    )
+    optionroof = models.CharField(
+        'ICF roof system', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include an ICF roof system?', null=True
+    )
+    comments = models.TextField(
+        'comments', blank=True, help_text='What are comments for this estimate?'
+    )
 
     def __str__(self):
         return 'ICF For ' + self.estirequest
@@ -953,80 +1191,157 @@ class EstisheetICF(models.Model):
 
 class EstisheetInteriorMillwork(models.Model):
 
-    estirequest = models.ForeignKey(Estirequest, help_text='For what request is this sheet?', on_delete=models.CASCADE)
+    estirequest = models.ForeignKey(Estirequest, help_text='For what request is this sheet?', on_delete=models.CASCADE
+    )
     primaryspecies = models.ForeignKey(
         OptionInteriorMillworkPrimarySpecies,
         verbose_name="primary species",
-        null=True, blank=True, help_text='What is the primary species for this millwork?', on_delete=models.SET_NULL)
-    trim1baselength  = models.CharField('trim type 1 base length', blank=True, max_length=10)
-    trim1basewidthsize  = models.CharField('trim type 1 base width/size', blank=True, max_length=10)
-    trim1casinglength  = models.CharField('trim type 1 casing length', blank=True, max_length=10)
-    trim1casingwidthsize  = models.CharField('trim type 1 casing width/size', blank=True, max_length=10)
-    trim1crownlength  = models.CharField('trim type 1 crown length', blank=True, max_length=10)
-    trim1crownwidthsize  = models.CharField('trim type 1 crown width/size', blank=True, max_length=10)
-    trim1comments  = models.CharField('trim type 1 comments length', blank=True, max_length=100)
-    trim1commentswidthsize  = models.CharField('trim type 1 comments width/size', blank=True, max_length=100)
-    trim2baselength  = models.CharField('trim type 2 base length', blank=True, max_length=10)
-    trim2basewidthsize  = models.CharField('trim type 2 base width/size', blank=True, max_length=10)
-    trim2casinglength  = models.CharField('trim type 2 casing length', blank=True, max_length=10)
-    trim2casingwidthsize  = models.CharField('trim type 2 casing width/size', blank=True, max_length=10)
-    trim2crownlength  = models.CharField('trim type 2 crown length', blank=True, max_length=10)
-    trim2crownwidthsize  = models.CharField('trim type 2 crown width/size', blank=True, max_length=10)
-    trim2comments  = models.CharField('trim type 2 comments length', blank=True, max_length=100)
-    trim2commentswidthsize  = models.CharField('trim type 2 comments width/size', blank=True, max_length=100)
-    trim3baselength  = models.CharField('trim type 3 base length', blank=True, max_length=10)
-    trim3basewidthsize  = models.CharField('trim type 3 base width/size', blank=True, max_length=10)
-    trim3casinglength  = models.CharField('trim type 3 casing length', blank=True, max_length=10)
-    trim3casingwidthsize  = models.CharField('trim type 3 casing width/size', blank=True, max_length=10)
-    trim3crownlength  = models.CharField('trim type 3 crown length', blank=True, max_length=10)
-    trim3crownwidthsize  = models.CharField('trim type 3 crown width/size', blank=True, max_length=10)
-    trim3comments  = models.CharField('trim type 3 comments length', blank=True, max_length=100)
-    trim3commentswidthsize  = models.CharField('trim type 3 comments width/size', blank=True, max_length=100)
-    casingdetails = models.CharField('casing details', blank=True, max_length=20)
-    windowstoolskirt = models.BooleanField('window stool with skirt', blank=True, default=False)
-    pictureframe = models.CharField('picture frame', choices=YESNO, default='N', max_length=1)
-    casingdetails = models.CharField('casing details', blank=True, max_length=30)
-    dwreturn = models.BooleanField('dwreturn', blank=True, default=False)
-    interiorcolumns = models.CharField('interiordoors', blank=True, max_length=30)
-    interiordoors = models.CharField('interiordoors', blank=True, max_length=30)
-    doorstyle = models.CharField('doorstyle', blank=True, max_length=30)
-    doorhanging = models.CharField('hanging', blank=True, max_length=30)
-    jambthickness = models.CharField('jambthickness', blank=True, max_length=30)
-    specialtydoors = models.CharField('specialtydoors', blank=True, max_length=80)
+        null=True, blank=True, help_text='What is the primary species for this millwork?', on_delete=models.SET_NULL
+    )
+    trim1baselength  = models.CharField(
+        'trim type 1 base length', blank=True, max_length=10
+    )
+    trim1basewidthsize  = models.CharField(
+        'trim type 1 base width/size', blank=True, max_length=10
+    )
+    trim1casinglength  = models.CharField(
+        'trim type 1 casing length', blank=True, max_length=10
+    )
+    trim1casingwidthsize  = models.CharField(
+        'trim type 1 casing width/size', blank=True, max_length=10
+    )
+    trim1crownlength  = models.CharField(
+        'trim type 1 crown length', blank=True, max_length=10
+    )
+    trim1crownwidthsize  = models.CharField(
+        'trim type 1 crown width/size', blank=True, max_length=10
+    )
+    trim1comments  = models.CharField(
+        'trim type 1 comments length', blank=True, max_length=100
+    )
+    trim1commentswidthsize  = models.CharField(
+        'trim type 1 comments width/size', blank=True, max_length=100
+    )
+    trim2baselength  = models.CharField(
+        'trim type 2 base length', blank=True, max_length=10
+    )
+    trim2basewidthsize  = models.CharField(
+        'trim type 2 base width/size', blank=True, max_length=10
+    )
+    trim2casinglength  = models.CharField(
+        'trim type 2 casing length', blank=True, max_length=10
+    )
+    trim2casingwidthsize  = models.CharField(
+        'trim type 2 casing width/size', blank=True, max_length=10
+    )
+    trim2crownlength  = models.CharField(
+        'trim type 2 crown length', blank=True, max_length=10
+    )
+    trim2crownwidthsize  = models.CharField(
+        'trim type 2 crown width/size', blank=True, max_length=10
+    )
+    trim2comments  = models.CharField(
+        'trim type 2 comments length', blank=True, max_length=100
+    )
+    trim2commentswidthsize  = models.CharField(
+        'trim type 2 comments width/size', blank=True, max_length=100
+    )
+    trim3baselength  = models.CharField(
+        'trim type 3 base length', blank=True, max_length=10
+    )
+    trim3basewidthsize  = models.CharField(
+        'trim type 3 base width/size', blank=True, max_length=10
+    )
+    trim3casinglength  = models.CharField(
+        'trim type 3 casing length', blank=True, max_length=10
+    )
+    trim3casingwidthsize  = models.CharField(
+        'trim type 3 casing width/size', blank=True, max_length=10
+    )
+    trim3crownlength  = models.CharField(
+        'trim type 3 crown length', blank=True, max_length=10
+    )
+    trim3crownwidthsize  = models.CharField(
+        'trim type 3 crown width/size', blank=True, max_length=10
+    )
+    trim3comments  = models.CharField(
+        'trim type 3 comments length', blank=True, max_length=100
+    )
+    trim3commentswidthsize  = models.CharField(
+        'trim type 3 comments width/size', blank=True, max_length=100
+    )
+    casingdetails = models.CharField('casing details', blank=True, max_length=20
+    )
+    windowstoolskirt = models.BooleanField('window stool with skirt', blank=True, default=False
+    )
+    pictureframe = models.CharField('picture frame', choices=YESNO, default='N', max_length=1
+    )
+    casingdetails = models.CharField('casing details', blank=True, max_length=30
+    )
+    dwreturn = models.BooleanField('dwreturn', blank=True, default=False
+    )
+    interiorcolumns = models.CharField('interiordoors', blank=True, max_length=30
+    )
+    interiordoors = models.CharField('interiordoors', blank=True, max_length=30
+    )
+    doorstyle = models.CharField('doorstyle', blank=True, max_length=30
+    )
+    doorhanging = models.CharField('hanging', blank=True, max_length=30
+    )
+    jambthickness = models.CharField('jambthickness', blank=True, max_length=30
+    )
+    specialtydoors = models.CharField('specialtydoors', blank=True, max_length=80
+    )
     stair1treadspecies = models.ForeignKey(
         OptionInteriorMillworkTreadSpecies,
         verbose_name="tread species",
-        null=True, blank=True, help_text='What is the species for this tread?', on_delete=models.SET_NULL, related_name='stair1tread')
+        null=True, blank=True, help_text='What is the species for this tread?', on_delete=models.SET_NULL, related_name='stair1tread'
+    )
     stair1riserspecies = models.ForeignKey(
         OptionInteriorMillworkRiserSpecies,
         verbose_name="riser species",
-        null=True, blank=True, help_text='What is the species for this riser?', on_delete=models.SET_NULL, related_name='stair1riser')
-    stair1handrail = models.CharField('stair1handrail', blank=True, max_length=30)
-    stair1picketnewel = models.CharField('stair1picketnewel', blank=True, max_length=100)
+        null=True, blank=True, help_text='What is the species for this riser?', on_delete=models.SET_NULL, related_name='stair1riser'
+    )
+    stair1handrail = models.CharField('stair1handrail', blank=True, max_length=30
+    )
+    stair1picketnewel = models.CharField('stair1picketnewel', blank=True, max_length=100
+    )
     stair2treadspecies = models.ForeignKey(
         OptionInteriorMillworkTreadSpecies,
         verbose_name="tread species",
-        null=True, blank=True, help_text='What is the species for this tread?', on_delete=models.SET_NULL, related_name='stair2tread')
+        null=True, blank=True, help_text='What is the species for this tread?', on_delete=models.SET_NULL, related_name='stair2tread'
+    )
     stair2riserspecies = models.ForeignKey(
         OptionInteriorMillworkRiserSpecies,
         verbose_name="riser species",
-        null=True, blank=True, help_text='What is the species for this riser?', on_delete=models.SET_NULL, related_name='stair2riser')
-    stair2handrail = models.CharField('stair2handrail', blank=True, max_length=30)
-    stair2picketnewel = models.CharField('stair2picketnewel', blank=True, max_length=30)
+        null=True, blank=True, help_text='What is the species for this riser?', on_delete=models.SET_NULL, related_name='stair2riser'
+    )
+    stair2handrail = models.CharField('stair2handrail', blank=True, max_length=30
+    )
+    stair2picketnewel = models.CharField('stair2picketnewel', blank=True, max_length=30
+    )
     stair3treadspecies = models.ForeignKey(
         OptionInteriorMillworkTreadSpecies,
         verbose_name="tread species",
-        null=True, blank=True, help_text='What is the species for this tread?', on_delete=models.SET_NULL, related_name='stair3tread')
+        null=True, blank=True, help_text='What is the species for this tread?', on_delete=models.SET_NULL, related_name='stair3tread'
+    )
     stair3riserspecies = models.ForeignKey(
         OptionInteriorMillworkRiserSpecies,
         verbose_name="riser species",
-        null=True, blank=True, help_text='What is the species for this riser?', on_delete=models.SET_NULL, related_name='stair3riser')
-    stair3handrail = models.CharField('stair3handrail', blank=True, max_length=30)
-    stair3picketnewel = models.CharField('stair3picketnewel', blank=True, max_length=30)
-    stairnotes  = models.CharField('stairnotes ', blank=True, max_length=30)
-    wainscot = models.CharField('wainscot', blank=True, max_length=80)
-    cofferedceiling = models.CharField('coffered ceiling', blank=True, max_length=80)
-    comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?')
+        null=True, blank=True, help_text='What is the species for this riser?', on_delete=models.SET_NULL, related_name='stair3riser'
+    )
+    stair3handrail = models.CharField('stair3handrail', blank=True, max_length=30
+    )
+    stair3picketnewel = models.CharField('stair3picketnewel', blank=True, max_length=30
+    )
+    stairnotes  = models.CharField('stairnotes ', blank=True, max_length=30
+    )
+    wainscot = models.CharField('wainscot', blank=True, max_length=80
+    )
+    cofferedceiling = models.CharField('coffered ceiling', blank=True, max_length=80
+    )
+    comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?'
+    )
 
     def __str__(self):
         return 'Interior Millwork for ' + self.estirequest
@@ -1037,36 +1352,51 @@ class EstisheetInteriorMillwork(models.Model):
 
 class EstisheetExteriorMillwork(models.Model):
 
-    estirequest = models.ForeignKey(Estirequest, help_text='For what request is this sheet?', on_delete=models.CASCADE)
+    estirequest = models.ForeignKey(Estirequest, help_text='For what request is this sheet?', on_delete=models.CASCADE
+    )
     railingstyle  = models.ForeignKey(
         OptionExteriorMillworkRailingStyle,
         verbose_name="railing style",
-        blank=True, help_text='What is the railing style?', null=True, on_delete=models.SET_NULL)
-    railingstylecomments  = models.CharField('railing style comments', blank=True, help_text='What is the railing style?', max_length=255)
-    railinglevel  = models.CharField('level rail sections', blank=True, help_text='What is the quantity of level rail?', max_length=25)
-    railingstair  = models.CharField('stair rail sections', blank=True, help_text='What is the quantity of stair rail?', max_length=25)
-    takeoff  = models.FileField('take off', upload_to='documents/', blank=True, help_text='What is the take off?', max_length=25, null=True)
-    railingnewelposts = models.CharField('structural newel posts', blank=True, default=0, help_text='How many newel posts  are to be installed', max_length=6)
-    railingnewelbrackets = models.CharField('install newel brackets', blank=True, default=0, help_text='How many newel brackets are to be installed', max_length=6)
-    railingnewelcovers = models.CharField('install newel covers', blank=True, default=0, help_text='How many newel covers are to be installed', max_length=6)
-    columncomments = models.CharField('column comments', blank=True, help_text='What are any comments about columns?', max_length=255)
+        blank=True, help_text='What is the railing style?', null=True, on_delete=models.SET_NULL
+    )
+    railingstylecomments  = models.CharField('railing style comments', blank=True, help_text='What is the railing style?', max_length=255
+    )
+    railinglevel  = models.CharField('level rail sections', blank=True, help_text='What is the quantity of level rail?', max_length=25
+    )
+    railingstair  = models.CharField('stair rail sections', blank=True, help_text='What is the quantity of stair rail?', max_length=25
+    )
+    takeoff  = models.FileField('take off', upload_to='documents/', blank=True, help_text='What is the take off?', max_length=25, null=True
+    )
+    railingnewelposts = models.CharField('structural newel posts', blank=True, default=0, help_text='How many newel posts  are to be installed', max_length=6
+    )
+    railingnewelbrackets = models.CharField('install newel brackets', blank=True, default=0, help_text='How many newel brackets are to be installed', max_length=6
+    )
+    railingnewelcovers = models.CharField('install newel covers', blank=True, default=0, help_text='How many newel covers are to be installed', max_length=6
+    )
+    columncomments = models.CharField('column comments', blank=True, help_text='What are any comments about columns?', max_length=255
+    )
     optionexteriormillworkdeckingbrand = models.ForeignKey(
         OptionExteriorMillworkDeckingBrand,
         verbose_name="decking brand",
-        blank=True, help_text='What is the decking material?', null=True, on_delete=models.SET_NULL)
+        blank=True, help_text='What is the decking material?', null=True, on_delete=models.SET_NULL
+    )
     deckinggrooves = models.ForeignKey(
         OptionExteriorMillworkDeckingGrooves,
         verbose_name="decking grooves",
-        blank=True, help_text='What kind of grooving does this decking have?', null=True, on_delete=models.SET_NULL)
+        blank=True, help_text='What kind of grooving does this decking have?', null=True, on_delete=models.SET_NULL
+    )
     optionexteriormillworkdeckingcollection = models.ForeignKey(
         OptionExteriorMillworkDeckingCollection,
         verbose_name="deckng collection",
-        blank=True, help_text='What is the decking collection?', null=True, on_delete=models.SET_NULL)
+        blank=True, help_text='What is the decking collection?', null=True, on_delete=models.SET_NULL
+    )
     deckingcolor = models.ForeignKey(
         OptionExteriorMillworkDeckingColor,
         verbose_name="decking color",
-        blank=True, help_text='What is the decking color?', null=True, on_delete=models.SET_NULL)
-    shutters = models.CharField('shutter comments', blank=True, help_text='What are any notes about shutters?', max_length=255)
+        blank=True, help_text='What is the decking color?', null=True, on_delete=models.SET_NULL
+    )
+    shutters = models.CharField('shutter comments', blank=True, help_text='What are any notes about shutters?', max_length=255
+    )
 
     def __str__(self):
         return 'Exterior Millwork for ' + self.estirequest
@@ -1077,11 +1407,14 @@ class EstisheetExteriorMillwork(models.Model):
         verbose_name = 'estimate sheet for exterior millwork'
 
 class Assignment(models.Model):
-    salesperson = models.ForeignKey(Salesperson, on_delete=models.SET_NULL, blank=True, help_text='Who is the salesperson of this project', null=True)
-    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For which project is this assigment?')
+    salesperson = models.ForeignKey(Salesperson, on_delete=models.SET_NULL, blank=True, help_text='Who is the salesperson of this project', null=True
+    )
+    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For which project is this assigment?'
+    )
 
     def __str__(self):
-        return '{} assigned to {}'.format(self.salesperson, self.estirequest)
+        return '{} assigned to {}'.format(self.salesperson, self.estirequest
+    )
 
     class Meta:
         ordering = ('salesperson',)
@@ -1096,15 +1429,24 @@ class Proposal(models.Model):
         (STATUS_SUBMITTED, 'Submitted'),
         (STATUS_ACCEPTED, 'Accepted'),
     )
-    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For which request is this sheet?')
-    component = models.CharField('Component', blank=True, max_length=100, help_text='For what component is this estimate')
-    amount = models.DecimalField('Amount',  decimal_places=2, blank=True, help_text='What is the amount of the proposal?', max_digits=10, null=True)
-    estimator = models.ForeignKey(Estimator, blank=True, help_text='Who submitted this proposal?', null=True, on_delete=models.PROTECT)
-    create_date = models.DateField('date', blank=True, default=date.today, help_text='When was this proposal created?')
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='created by', null=True, on_delete=models.PROTECT, help_text="The user who submitted the proposal")
-    update_date = models.DateField('updated', blank=True, auto_now=True, help_text='When was this proposal created?')
-    uploadedfile = models.FileField('file', upload_to='documents/', blank=True, null=True)
-    comments = models.TextField('comments', blank=True, help_text='What are comments for this proposal?')
+    estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='For which request is this sheet?'
+    )
+    component = models.CharField('Component', blank=True, max_length=100, help_text='For what component is this estimate'
+    )
+    amount = models.DecimalField('Amount',  decimal_places=2, blank=True, help_text='What is the amount of the proposal?', max_digits=10, null=True
+    )
+    estimator = models.ForeignKey(Estimator, blank=True, help_text='Who submitted this proposal?', null=True, on_delete=models.PROTECT
+    )
+    create_date = models.DateField('date', blank=True, default=date.today, help_text='When was this proposal created?'
+    )
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='created by', null=True, on_delete=models.PROTECT, help_text="The user who submitted the proposal"
+    )
+    update_date = models.DateField('updated', blank=True, auto_now=True, help_text='When was this proposal created?'
+    )
+    uploadedfile = models.FileField('file', upload_to='documents/', blank=True, null=True
+    )
+    comments = models.TextField('comments', blank=True, help_text='What are comments for this proposal?'
+    )
 
     def can_view_in_list(self, user):
         can = False
@@ -1159,9 +1501,12 @@ class Proposal(models.Model):
         ]
 
 class ProposalDocument(models.Model):
-    proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE, help_text='What is the proposal to which this document is attached?')
-    title = models.CharField('title', max_length = 200, blank=True, help_text='What is this documents title?')
-    uploadedfile = models.FileField(upload_to='documents/', blank=True, null=True)
+    proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE, help_text='What is the proposal to which this document is attached?'
+    )
+    title = models.CharField('title', max_length = 200, blank=True, help_text='What is this documents title?'
+    )
+    uploadedfile = models.FileField(upload_to='documents/', blank=True, null=True
+    )
 
     def __str__(self):
         return self.title
