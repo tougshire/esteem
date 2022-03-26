@@ -321,6 +321,7 @@ class EstirequestCreate(PermissionRequiredMixin, CreateView):
         if salespeople.exists():
             assignment = Assignment.objects.create(estirequest=self.object, salesperson=Salesperson.objects.filter(user=self.request.user.id)[0])
             assignment.save()
+        self.object.created_by = self.request.user
         self.object.save()
 
         return response
@@ -623,6 +624,7 @@ class ProposalCreate(PermissionRequiredMixin, CreateView):
         proposal = form.save(commit=False)
         estimator = Estimator.objects.filter(user=self.request.user.id).all()[0]
         proposal.estimator=estimator
+        self.object.created_by = self.request.user
         proposal.save()
 
         return valid
