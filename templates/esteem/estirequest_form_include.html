@@ -112,7 +112,7 @@
 				{% include './_form_buttons.html' with buttons=2 type1="submit" id1="button_draft" caption1="Save Draft" type2="submit" id2="button_submit" caption2="Submit for Proposal" %}
 			{% elif form.status.value == status_submitted %}
 				{% include './_form_buttons.html' with buttons=2 type1="submit" id1="button_draft" caption1="Revert to Draft" type2="submit" id2="button_submit" caption2="Resubmit" %}
-			{% endif %}	
+			{% endif %}
 		</div>
 
 	</div>
@@ -122,6 +122,38 @@
 <script type='text/javascript'>
 addFormsetFormInit('div_formset_assignment', 'id_assignment_set');
 addFormsetFormInit('div_formset_estirequestdocument', 'id_estirequestdocument_set');
+</script>
+<script>
+  function addListenersToOptionSelects(){
+    var optionSelects = document.querySelectorAll('select[name*="option"]')
+    for(select of optionSelects){
+      console.log(select)
+      select.addEventListener('change', function(e) {
+        let sop;
+        let tar = e.target
+        for( tries=0; tries < 3; tries++ ) {
+          let par = tar.parentNode
+          if( par.nextElementSibling && par.nextElementSibling.classList.contains("sample")) {
+            let sib = par.nextElementSibling
+            while (sib.firstChild) {
+              sib.removeChild(sib.firstChild);
+            }
+            if(e.target.selectedOptions.length==1) {
+              sop = e.target.selectedOptions[0]
+              if(sop.dataset.sample) {
+                let img = document.createElement('img')
+                img.src=sop.dataset.sample
+                sib.appendChild(img)
+                break
+              }
+            }
+          }
+          tar = par
+        }
+      })
+    }
+  }
+  addListenersToOptionSelects()
 </script>
 <script>
 
@@ -147,7 +179,7 @@ function goto(pageName) {
 	document.getElementById('div_' + pageName).style.display="block";
 
 	showPageLinks();
-  
+
 }
 
 function limitBy(limiterName,limiter) {
@@ -168,7 +200,7 @@ function limitBy(limiterName,limiter) {
 		var templateSelect=document.getElementById(templateSelectId);
 		if(templateSelect) {
 			var selectedOption=limitees[i].value;
-			limitees[i].innerHTML=''; 
+			limitees[i].innerHTML='';
 			var goodOptions = templateSelect.querySelectorAll('[data-' + limiterName + '="' + limiter.value + '"');
 			for( var j=0; j<goodOptions.length; j++) {
 				var cloneOption=goodOptions[j].cloneNode(true);
@@ -224,7 +256,7 @@ function showPageLinks() {
 		pageLinksDiv.removeChild(pageLinksDiv.firstChild);
 	}
 	pageLinksDiv.innerHTML='';
-	
+
   for(p=0; p < page_names.length; p++ ) {
 		if(page_names[p].chk==false || document.getElementById('id_has_' + page_names[p].plname).checked==true) {
 			var pageLinkDiv=document.createElement('div');

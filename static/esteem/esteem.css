@@ -89,7 +89,7 @@ div.sectionCore div.detail2FieldWrapper {
 div.formFieldWrapper,
 div.detailFieldWrapper {
 	display:grid;
-	grid-template-columns:1fr 2fr;
+	grid-template-columns:2fr 4fr 1fr;
 }
 
 div.formFieldWidgetWrapper,
@@ -97,7 +97,6 @@ div.detailFieldWidgetWrapper {
 	display:grid;
 	grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 }
-
 
 div.pageTabular > div.sectionCore {
 	grid-column: auto / span 1;
@@ -324,6 +323,10 @@ div.prevNextItem {
 div.formTabularRow:nth-child(odd),
 div.detailTabularRow:nth-child(even) {
 	background-color:#ccffcc;
+}
+
+div.sample img {
+    height:1.1em;
 }
 
 /* end color */
