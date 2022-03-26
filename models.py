@@ -136,6 +136,7 @@ class Estirequest(models.Model):
     address = models.CharField('address/lot', max_length=200, blank=True, help_text='What is the project\'s street address or lot number?')
     citystzip = models.CharField('city, state, zip', max_length=200, blank=True, help_text='What is the project\'s city, state and zip?')
     create_date = models.DateField('date', blank=True, default=date.today, help_text='What is the date that this request was created?')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='created by', null=True, on_delete=models.PROTECT, help_text="The user who submitted the request")
     submit_date = models.DateField('date', blank=True, help_text='What is the date that this request was submitted for estimate?', null=True)
     status = models.CharField('status', max_length=2, choices=STATUS_CHOICES, default=STATUS_DRAFT, help_text='What is the status of this request')
     comments = models.TextField('comments for estimator', blank=True, help_text='What are comments for this request?')

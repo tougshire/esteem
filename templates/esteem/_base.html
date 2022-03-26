@@ -8,18 +8,32 @@
 	<title>
         Ervin - Estimating Hub
 	</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'esteem/tougshire.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'esteem/esteem.css' %}"/>
+    {% if user.get_custom_colorscheme %}<link rel="stylesheet" type="text/css" href="{% static 'esteem/esteem_'|add:user.get_custom_colorscheme|add:'.css' %}"/>{% endif %}
 </head>
 <body>
 {% include './_app_menu.html' %}
 <div id="div_appHeader" class="appHeader">
-    <div id="div_appTitle" class="appTitle">
-            <h1>Ervin - Estimating Hub</h1>
-            <p>Welcome to the Ervin Architectural Products Estimating Hub</p>
+    <div id="div_appTitle" class="appTitle"{% if user.get_custom_header_image %} style="background-image:url({{ user.get_custom_header_image.url }})"{% endif %}>
+            <h1>
+              {% if user.get_custom_page_title %}
+                {{ user.get_custom_page_title }}
+              {% else %}
+                Ervin - Estimating Hub
+              {% endif %}
+            </h1>
+            <p>
+              {% if user.get_custom_page_subtitle %}
+                {{ user.get_custom_page_subtitle }}
+              {% else %}
+                Welcome to the Ervin Architectural Products Estimating Hub
+              {% endif %}
+            </p>
         </div>
     <div id="div_appLogo" class="appLogo">
-        {% if user.salesperson_set.first.associated_customer.custom_logo %}
-            <img class="appLogo" src="{{ user.salesperson_set.first.associated_customer.custom_logo.url }}"/>
+        {% comment %} {% if user.salesperson_set.first.associated_customer.custom_logo %} {% endcomment %}
+        {% if user.get_custom_logo %}
+          <img class="appLogo" src="{{ user.get_custom_logo.url }}"/>
         {% else %}
             <img class="appLogo" src="{% static 'esteem/ervin_badge.png' %}"/>
         {% endif %}

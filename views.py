@@ -1,3 +1,4 @@
+from ervin.models import Company
 from .forms import AssignmentForm, Assignment_EstirequestForm, Assignment_EstirequestFormset, CustomerForm, OptionDoorBrandForm, ProposalDocumentForm, ProposalDocument_ProposalFormset, ProposalForm, Proposal_EstirequestForm, Proposal_EstirequestFormset, EstimatorForm, EstirequestDocumentForm, EstirequestDocument_EstirequestFormset, EstirequestForm, EstisheetDoorForm, EstisheetDoor_EstirequestForm, EstisheetDoor_EstirequestFormset, EstisheetICFForm, EstisheetICF_EstirequestForm, EstisheetICF_EstirequestFormset, EstisheetInteriorMillworkForm, EstisheetInteriorMillwork_EstirequestForm, EstisheetInteriorMillwork_EstirequestFormset, EstisheetExteriorMillworkForm, EstisheetExteriorMillwork_EstirequestForm, EstisheetExteriorMillwork_EstirequestFormset, EstisheetMarvinDoorForm, EstisheetMarvinDoor_EstirequestForm, EstisheetMarvinDoor_EstirequestFormset, EstisheetWindowForm, EstisheetWindow_EstirequestForm, EstisheetWindow_EstirequestFormset , SalespersonForm, OptionWindowBrandForm
 from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionWindowBrand, Proposal, ProposalDocument, Salesperson
 from datetime import datetime
@@ -13,6 +14,7 @@ from django.views.generic.list import ListView
 import inspect, sys, os
 from django.core.exceptions import PermissionDenied
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import get_user_model
 
 class AssignmentCreate(PermissionRequiredMixin, CreateView):
 
@@ -62,7 +64,7 @@ class CustomerUpdate(PermissionRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
 
         context_data=super().get_context_data(**kwargs)
-        
+
         can_do = self.object.can_change(self.request.user)
 
         if not can_do:
@@ -86,7 +88,7 @@ class CustomerDelete(PermissionRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
 
         context_data=super().get_context_data(**kwargs)
-        
+
         can_do = self.object.can_change(self.request.user)
 
         if not can_do:
@@ -148,6 +150,13 @@ class EstirequestDocumentDetail(PermissionRequiredMixin, DetailView):
 
     model = EstirequestDocument
     permission_required = 'esteem.view_estirequestdocument'
+
+    def has_permission(self):
+        return super().has_permission() or get_user_model().objects.filter(company=self.get_object().created_by.company).exits() or get_user_model().objects.filter(user=self.get_object().created_by).exits()
+
+
+        #self.request.user, person=self.get_object()).exists()
+
 
 class EstirequestDocumentDelete(PermissionRequiredMixin, DeleteView):
 
@@ -297,7 +306,7 @@ class EstisheetMarvinDoorList(PermissionRequiredMixin, ListView):
     permission_required = 'esteem.view_estisheetmarvindoor'
 
 class EstirequestCreate(PermissionRequiredMixin, CreateView):
-    
+
     model = Estirequest
     permission_required = 'esteem.add_estirequest'
     fields=[]
@@ -318,7 +327,7 @@ class EstirequestCreate(PermissionRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('estirequest_update', kwargs={'pk': self.object.id})
-    
+
 class EstirequestUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
 
     model = Estirequest
@@ -329,7 +338,7 @@ class EstirequestUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        
+
         can_do = self.object.can_change(self.request.user)
         if not can_do:
             raise PermissionDenied()
@@ -384,7 +393,7 @@ class EstirequestUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView
                     recipients,
                     fail_silently=False,
                 )
-            
+
         assignments = Assignment_EstirequestFormset(self.request.POST, self.request.FILES, instance=self.object)
         estirequestdocuments = EstirequestDocument_EstirequestFormset(self.request.POST, self.request.FILES, instance=self.object)
         estisheeticfs = EstisheetICF_EstirequestFormset(self.request.POST, instance=self.object)
@@ -526,7 +535,7 @@ class SalespersonDelete(PermissionRequiredMixin, DeleteView):
 
     model = Salesperson
     permission_required = 'esteem.delete_salesperson'
-    
+
     success_url=reverse_lazy('salesperson_list')
 
 class SalespersonList(PermissionRequiredMixin, ListView):
@@ -668,7 +677,7 @@ class ProposalUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView):
                 estirequest.save()
 
         print ('l620g45 form is valid')
-        return response 
+        return response
 
     def get_success_url(self):
 
@@ -705,7 +714,7 @@ class ProposalEstirequestCreate(PermissionRequiredMixin, CreateView):
 
     model = Proposal
     permission_required = 'esteem.add_proposal'
-    
+
     form_class = Proposal_EstirequestForm
     template_name = 'esteem/proposal_estirequest.html'
 

@@ -1,3 +1,6 @@
+.right {
+	text-align:right;
+}
 
 div.appHeader {
 	display:grid;
@@ -95,9 +98,6 @@ div.detailFieldWidgetWrapper {
 	grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 }
 
-div.detailFieldWrapper {
-	/*margin:.5em;*/
-}
 
 div.pageTabular > div.sectionCore {
 	grid-column: auto / span 1;
@@ -133,8 +133,8 @@ div.objectList div.listTabularRow{
 }
 
 
-div.sectionProducts div.formFieldWrapper, 
-div.sectionEstirquests div.detailFieldWrapper 
+div.sectionProducts div.formFieldWrapper,
+div.sectionEstirquests div.detailFieldWrapper
 {
 	display:grid;
 	grid-template-columns:1fr 4fr;
@@ -279,7 +279,7 @@ div.appHeader {
 div.appTitle {
 	color:white;
 	background-color:#08382e;
-	background-image: url(https://static.tougshire.com/ervin_dev/esteem/ervin_worker.png); 
+	background-image: url(https://static.tougshire.com/ervin_dev/esteem/ervin_worker.png);
 	background-blend-mode:overlay;
 	background-size: cover;
 	background-position-x: left;
@@ -299,7 +299,7 @@ div.objectTitle {
 	background-color:white;
 	color:#08382e;
 }
-	
+
 
 div.menubar, div.menubar a  {
 	background-color:#08382e;
@@ -336,6 +336,7 @@ div.detailTabularRow:nth-child(even) {
 		height:160px;
 		margin:0 auto;
 	}
+
 	div.appLogo img {
 		height:100%;
 	}

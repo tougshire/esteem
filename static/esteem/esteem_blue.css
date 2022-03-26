@@ -1,0 +1,26 @@
+div.appHeader {
+	background-color:#130838;
+}
+
+div.appTitle {
+	background-color:#130838;
+}
+div.objectTitle {
+	color:#130838;
+}
+
+div.menubar, div.menubar a  {
+	background-color:#130838;
+}
+
+div.prevNext {
+	color:#130838;
+}
+
+div.prevNextItem {
+	color:#130838;
+}
+
+div.listTabularRow:nth-child(even){
+	background-color:#cdd2ff;
+}
