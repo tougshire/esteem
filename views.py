@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from ervin.models import Company
 from .forms import AssignmentForm, Assignment_EstirequestForm, Assignment_EstirequestFormset, CustomerForm, OptionDoorBrandForm, ProposalDocumentForm, ProposalDocument_ProposalFormset, ProposalForm, Proposal_EstirequestForm, Proposal_EstirequestFormset, EstimatorForm, EstirequestDocumentForm, EstirequestDocument_EstirequestFormset, EstirequestForm, EstisheetDoorForm, EstisheetDoor_EstirequestForm, EstisheetDoor_EstirequestFormset, EstisheetICFForm, EstisheetICF_EstirequestForm, EstisheetICF_EstirequestFormset, EstisheetInteriorMillworkForm, EstisheetInteriorMillwork_EstirequestForm, EstisheetInteriorMillwork_EstirequestFormset, EstisheetExteriorMillworkForm, EstisheetExteriorMillwork_EstirequestForm, EstisheetExteriorMillwork_EstirequestFormset, EstisheetMarvinDoorForm, EstisheetMarvinDoor_EstirequestForm, EstisheetMarvinDoor_EstirequestFormset, EstisheetWindowForm, EstisheetWindow_EstirequestForm, EstisheetWindow_EstirequestFormset , SalespersonForm, OptionWindowBrandForm
 from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionWindowBrand, Proposal, ProposalDocument, Salesperson
@@ -15,6 +16,8 @@ import inspect, sys, os
 from django.core.exceptions import PermissionDenied
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import get_user_model
+from django.contrib import messages
+import secrets
 
 class AssignmentCreate(PermissionRequiredMixin, CreateView):
 
@@ -312,14 +315,21 @@ class EstirequestCreate(PermissionRequiredMixin, CreateView):
     fields=[]
     template_name = 'esteem/estirequest_create.html'
 
+
     def form_valid(self, form):
-        response = super().form_valid(form)
+
+        self.object = form.save(commit=False)
+        self.object.requestnum = '__temp__' + secrets.token_urlsafe()  #dummy requestnum to save and get object.pk for use in real requestnum
         self.object = form.save()
         nnn=timezone.now()
         self.object.requestnum='{:02}{:x}{:03x}'.format(nnn.year - 2000, nnn.month, (self.object.pk))
         salespeople=Salesperson.objects.filter(user=5).all()
         if salespeople.exists():
-            assignment = Assignment.objects.create(estirequest=self.object, salesperson=Salesperson.objects.filter(user=self.request.user.id)[0])
+            try:
+                assignment = Assignment.objects.create(estirequest=self.object, salesperson=Salesperson.objects.filter(user=self.request.user.id)[0])
+            except IndexError as e:
+                messages.add_message(self.request, messages.ERROR, 'Could not find salesperson to assign')
+                return self.form_invalid(form)
             assignment.save()
         self.object.created_by = self.request.user
         self.object.save()
