@@ -328,7 +328,7 @@ class EstirequestCreate(PermissionRequiredMixin, CreateView):
             try:
                 assignment = Assignment.objects.create(estirequest=self.object, salesperson=Salesperson.objects.filter(user=self.request.user.id)[0])
             except IndexError as e:
-                messages.add_message(self.request, messages.ERROR, 'Could not find salesperson to assign')
+                messages.add_message(self.request, messages.ERROR, 'Could not find salesperson to assign. Please contact the database administrator')
                 return self.form_invalid(form)
             assignment.save()
         self.object.created_by = self.request.user
