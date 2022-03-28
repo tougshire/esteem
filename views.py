@@ -334,7 +334,7 @@ class EstirequestCreate(PermissionRequiredMixin, CreateView):
         self.object.created_by = self.request.user
         self.object.save()
 
-        return response
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('estirequest_update', kwargs={'pk': self.object.id})
