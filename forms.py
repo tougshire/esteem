@@ -1,4 +1,3 @@
-from django.conf import settings
 from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionWindowBrand, Proposal, ProposalDocument, Salesperson
 from addable.forms import Addable, AddableMultiple
 from datetime import date, timedelta
@@ -21,10 +20,6 @@ class SelectWithBrand(forms.Select):
 
         if value:
             option['attrs']['data-' + self.limitby ] = getattr(value.instance, self.limitby).pk
-            if hasattr(value.instance, "sample"):
-                img = getattr(value.instance, "sample")
-                if img:
-                    option['attrs']['data-sample'] = getattr(value.instance, "sample").url
 
         return option
 
@@ -95,7 +90,6 @@ class OptionDoorBrandForm(ModelForm):
         ]
 
 class EstisheetDoorForm(ModelForm):
-
     class Meta:
 
         model=EstisheetDoor
