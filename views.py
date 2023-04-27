@@ -1,4 +1,4 @@
-from .forms import AssignmentForm, Assignment_EstirequestForm, Assignment_EstirequestFormset, CustomerForm, OptionDoorBrandForm, ProposalDocumentForm, ProposalDocument_ProposalFormset, ProposalForm, Proposal_EstirequestForm, Proposal_EstirequestFormset, EstimatorForm, EstirequestDocumentForm, EstirequestDocument_EstirequestFormset, EstirequestForm, EstisheetDoorForm, EstisheetDoor_EstirequestForm, EstisheetDoor_EstirequestFormset, EstisheetICFForm, EstisheetICF_EstirequestForm, EstisheetICF_EstirequestFormset, EstisheetInteriorMillworkForm, EstisheetInteriorMillwork_EstirequestForm, EstisheetInteriorMillwork_EstirequestFormset, EstisheetExteriorMillworkForm, EstisheetExteriorMillwork_EstirequestForm, EstisheetExteriorMillwork_EstirequestFormset, EstisheetMarvinDoorForm, EstisheetMarvinDoor_EstirequestForm, EstisheetMarvinDoor_EstirequestFormset, EstisheetWindowForm, EstisheetWindow_EstirequestForm, EstisheetWindow_EstirequestFormset , SalespersonForm, OptionWindowBrandForm
+from .forms import AssignmentForm, Assignment_EstirequestForm, Assignment_EstirequestFormset, CustomerForm, EstisheetHardware_EstirequestFormset, OptionDoorBrandForm, ProposalDocumentForm, ProposalDocument_ProposalFormset, ProposalForm, Proposal_EstirequestForm, Proposal_EstirequestFormset, EstimatorForm, EstirequestDocumentForm, EstirequestDocument_EstirequestFormset, EstirequestForm, EstisheetDoorForm, EstisheetDoor_EstirequestForm, EstisheetDoor_EstirequestFormset, EstisheetICFForm, EstisheetICF_EstirequestForm, EstisheetICF_EstirequestFormset, EstisheetInteriorMillworkForm, EstisheetInteriorMillwork_EstirequestForm, EstisheetInteriorMillwork_EstirequestFormset, EstisheetExteriorMillworkForm, EstisheetExteriorMillwork_EstirequestForm, EstisheetExteriorMillwork_EstirequestFormset, EstisheetMarvinDoorForm, EstisheetMarvinDoor_EstirequestForm, EstisheetMarvinDoor_EstirequestFormset, EstisheetWindowForm, EstisheetWindow_EstirequestForm, EstisheetWindow_EstirequestFormset , SalespersonForm, OptionWindowBrandForm
 from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionWindowBrand, Proposal, ProposalDocument, Salesperson
 from datetime import datetime
 from django.conf import settings
@@ -344,6 +344,7 @@ class EstirequestUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView
         estisheeticfs = EstisheetICF_EstirequestFormset( instance=self.object)
         estisheetinteriormillworks = EstisheetInteriorMillwork_EstirequestFormset( instance=self.object)
         estisheetexteriormillworks = EstisheetExteriorMillwork_EstirequestFormset( instance=self.object)
+        estisheethardware = EstisheetHardware_EstirequestFormset( instance=self.object)
         estisheetmarvindoors = EstisheetMarvinDoor_EstirequestFormset( instance=self.object)
         estisheetwindows = EstisheetWindow_EstirequestFormset( instance=self.object)
 
@@ -356,6 +357,7 @@ class EstirequestUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView
         context_data['estisheeticfs'] = estisheeticfs
         context_data['estisheetinteriormillworks'] = estisheetinteriormillworks
         context_data['estisheetexteriormillworks'] = estisheetexteriormillworks
+        context_data['estisheethardware'] = estisheethardware
         context_data['estisheetmarvindoors'] = estisheetmarvindoors
         context_data['estisheetwindows'] = estisheetwindows
 
@@ -389,7 +391,8 @@ class EstirequestUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView
         estirequestdocuments = EstirequestDocument_EstirequestFormset(self.request.POST, self.request.FILES, instance=self.object)
         estisheeticfs = EstisheetICF_EstirequestFormset(self.request.POST, instance=self.object)
         estisheetinteriormillworks = EstisheetInteriorMillwork_EstirequestFormset(self.request.POST, instance=self.object)
-        estisheetexteriormillworks = EstisheetExteriorMillwork_EstirequestFormset(self.request.POST, self.request.FILES, instance=self.object)
+        estisheetexteriormillworks = EstisheetExteriorMillwork_EstirequestFormset(self.request.POST, instance=self.object)
+        estisheethardware = EstisheetHardware_EstirequestFormset(self.request.POST, self.request.FILES, instance=self.object)
         estisheetdoors = EstisheetDoor_EstirequestFormset(self.request.POST, instance=self.object)
         estisheetmarvindoors = EstisheetMarvinDoor_EstirequestFormset(self.request.POST, instance=self.object)
         estisheetwindows = EstisheetWindow_EstirequestFormset(self.request.POST, instance=self.object)
@@ -425,6 +428,23 @@ class EstirequestUpdate(SuccessMessageMixin, PermissionRequiredMixin, UpdateView
             print('{} {}'.format(inspect.currentframe().f_lineno, __file__))
             print("Form Error")
             print(estisheetexteriormillworks.errors)
+
+        if estisheetinteriormillworks.is_valid():
+            estisheetinteriormillworks.instance = self.object
+            estisheetinteriormillworks.save()
+        else:
+            print('{} {}'.format(inspect.currentframe().f_lineno, __file__))
+            print("Form Error")
+            print(estisheetinteriormillworks.errors)
+
+        if estisheethardware.is_valid():
+            estisheethardware.instance = self.object
+            estisheethardware.save()
+        else:
+            print('{} {}'.format(inspect.currentframe().f_lineno, __file__))
+            print("Form Error")
+            print(estisheethardware.errors)
+
 
         if estisheeticfs.is_valid():
             estisheeticfs.instance = self.object

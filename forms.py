@@ -1,4 +1,4 @@
-from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionWindowBrand, Proposal, ProposalDocument, Salesperson
+from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetHardware, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionWindowBrand, Proposal, ProposalDocument, Salesperson
 from addable.forms import Addable, AddableMultiple
 from datetime import date, timedelta
 from django import forms
@@ -327,6 +327,60 @@ class EstisheetExteriorMillworkForm(ModelForm):
             'deckingcolor':SelectWithBrand(attrs={'data-limitby':'optionexteriormillworkdeckingcollection','data-rawname':'deckingcolor'}),
         }
 
+class EstisheetHardwareForm(ModelForm):
+    class Meta:
+        model = EstisheetHardware
+        fields = [
+            'estirequest',
+            'entrysets',
+            'entrysetscomments',
+            'electroniclocks',
+            'electroniclockscomments',
+            'deadbolts',
+            'deadboltscomments',
+            'keyedknobs',
+            'keyedknobscomments',
+            'knobs',
+            'knobscomments',
+            'sideplatelocks',
+            'sideplatelockscomments',
+            'slidingdoorhardware',
+            'slidingdoorhardwarecomments',
+            'barndoorhardware',
+            'barndoorhardwarecomments',
+            'dooraccessories',
+            'dooraccessoriescomments',
+            'knobs',
+            'knobscomments',
+
+        ]
+
+class EstisheetHardware_EstirequestForm(ModelForm):
+    class Meta:
+        model = EstisheetHardware
+        fields = [
+            'estirequest',
+            'entrysets',
+            'entrysetscomments',
+            'electroniclocks',
+            'electroniclockscomments',
+            'deadbolts',
+            'deadboltscomments',
+            'keyedknobs',
+            'keyedknobscomments',
+            'knobs',
+            'knobscomments',
+            'sideplatelocks',
+            'sideplatelockscomments',
+            'slidingdoorhardware',
+            'slidingdoorhardwarecomments',
+            'barndoorhardware',
+            'barndoorhardwarecomments',
+            'dooraccessoriescomments',
+            'knobs',
+            'knobscomments',
+        ]
+
 class EstisheetExteriorMillwork_EstirequestForm(ModelForm):
     class Meta:
         model = EstisheetExteriorMillwork
@@ -558,6 +612,7 @@ EstisheetDoor_EstirequestFormset = inlineformset_factory(Estirequest, EstisheetD
 EstisheetICF_EstirequestFormset = inlineformset_factory(Estirequest, EstisheetICF, form=EstisheetICF_EstirequestForm, extra=0, min_num=1,  can_delete=True)
 EstisheetInteriorMillwork_EstirequestFormset = inlineformset_factory(Estirequest, EstisheetInteriorMillwork, form=EstisheetInteriorMillwork_EstirequestForm, extra=0, min_num=1,  can_delete=True)
 EstisheetExteriorMillwork_EstirequestFormset = inlineformset_factory(Estirequest, EstisheetExteriorMillwork, form=EstisheetExteriorMillwork_EstirequestForm, extra=0, min_num=1,  can_delete=True)
+EstisheetHardware_EstirequestFormset = inlineformset_factory(Estirequest, EstisheetHardware, form=EstisheetHardware_EstirequestForm, extra=0, min_num=1,  can_delete=True)
 EstisheetMarvinDoor_EstirequestFormset = inlineformset_factory(Estirequest, EstisheetMarvinDoor, form=EstisheetMarvinDoor_EstirequestForm, extra=0, min_num=1, can_delete=True)
 EstisheetWindow_EstirequestFormset = inlineformset_factory(Estirequest, EstisheetWindow, form=EstisheetWindow_EstirequestForm, extra=0, min_num=1, can_delete=True)
 ProposalDocument_ProposalFormset = inlineformset_factory(Proposal, ProposalDocument, form=ProposalDocument_ProposalForm, extra=1, can_delete=True)

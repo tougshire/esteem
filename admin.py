@@ -1,4 +1,4 @@
-from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionDoorExteriorColor, OptionDoorHardwareFinish, OptionDoorInteriorFinish, OptionDoorLockSensor, OptionDoorScreen, OptionDoorShade, OptionExteriorMillworkDeckingBrand, OptionExteriorMillworkDeckingCollection, OptionExteriorMillworkDeckingColor, OptionExteriorMillworkDeckingGrooves, OptionExteriorMillworkRailingStyle, OptionICFWallThickness, OptionInteriorMillworkPrimarySpecies, OptionInteriorMillworkRiserSpecies, OptionInteriorMillworkTreadSpecies, OptionMarvinDoorBrand, OptionMarvinDoorExteriorColor, OptionMarvinDoorHardwareFinish, OptionMarvinDoorHardwareStyle, OptionMarvinDoorInteriorFinish, OptionMarvinDoorInteriorSpecies, OptionMarvinDoorLockSensor, OptionMarvinDoorScreen, OptionMarvinDoorShade, OptionWindowBrand, OptionWindowExteriorColor, OptionWindowHardwareFinish, OptionWindowInteriorFinish, OptionWindowInteriorSpecies, OptionWindowLockSensor, OptionWindowScreen, OptionWindowShade, Proposal, ProposalDocument, Salesperson
+from .models import Assignment, Customer, Estimator, Estirequest, EstirequestDocument, EstisheetDoor, EstisheetExteriorMillwork, EstisheetHardware, EstisheetICF, EstisheetInteriorMillwork, EstisheetMarvinDoor, EstisheetWindow, OptionDoorBrand, OptionDoorExteriorColor, OptionDoorHardwareFinish, OptionDoorInteriorFinish, OptionDoorLockSensor, OptionDoorScreen, OptionDoorShade, OptionExteriorMillworkDeckingBrand, OptionExteriorMillworkDeckingCollection, OptionExteriorMillworkDeckingColor, OptionExteriorMillworkDeckingGrooves, OptionExteriorMillworkRailingStyle, OptionICFWallThickness, OptionInteriorMillworkPrimarySpecies, OptionInteriorMillworkRiserSpecies, OptionInteriorMillworkTreadSpecies, OptionMarvinDoorBrand, OptionMarvinDoorExteriorColor, OptionMarvinDoorHardwareFinish, OptionMarvinDoorHardwareStyle, OptionMarvinDoorInteriorFinish, OptionMarvinDoorInteriorSpecies, OptionMarvinDoorLockSensor, OptionMarvinDoorScreen, OptionMarvinDoorShade, OptionWindowBrand, OptionWindowExteriorColor, OptionWindowHardwareFinish, OptionWindowInteriorFinish, OptionWindowInteriorSpecies, OptionWindowLockSensor, OptionWindowScreen, OptionWindowShade, Proposal, ProposalDocument, Salesperson
 from django.contrib import admin
 
 admin.site.register(Assignment)
@@ -8,6 +8,7 @@ admin.site.register(Estirequest)
 admin.site.register(EstirequestDocument)
 admin.site.register(EstisheetDoor)
 admin.site.register(EstisheetExteriorMillwork)
+admin.site.register(EstisheetHardware)
 admin.site.register(EstisheetICF)
 admin.site.register(EstisheetInteriorMillwork)
 admin.site.register(EstisheetMarvinDoor)

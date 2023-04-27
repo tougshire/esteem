@@ -266,6 +266,48 @@
 		</div>
 	{% endfor %}
 </div>
+
+<div id="div_hardwares" class="page" style="display:none">
+	<h2>Hardware</h2>
+	{% for estisheet in object.estisheethardware_set.all %}
+		<h3>Emtek</h3>
+		<div class="sectionhardware">
+			<div class="formTabularRow">
+				<div class="label">Entry Sets:</div><div>{{ estisheet.entrysets }}</div><div class="label">Comments:</div><div>{{ estisheet.entrysetscomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Electronic Locks:</div><div>{{ estisheet.electroniclocks }}</div><div class="label">Comments:</div><div>{{ estisheet.electroniclockscomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Deadbolts:</div><div>{{ estisheet.deadbolts }}</div><div class="label">Comments:</div><div>{{ estisheet.deadboltscomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Keyed Knobs:</div><div>{{ estisheet.keyedknobs }}</div><div class="label">Comments:</div><div>{{ estisheet.keyedknobscomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Non-Keyed Knobs:</div><div>{{ estisheet.knobs }}</div><div class="label">Comments:</div><div>{{ estisheet.knobscomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Side Plate Locks:</div><div>{{ estisheet.sideplatelocks }}</div><div class="label">Comments:</div><div>{{ estisheet.sideplatelockscomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Sliding Door Hardware:</div><div>{{ estisheet.slidingdoorhardware }}</div><div class="label">Comments:</div><div>{{ estisheet.slidingdoorhardwarecomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Barn Door Hardware:</div><div>{{ estisheet.barndoorhardware }}</div><div class="label">Comments:</div><div>{{ estisheet.barndoorhardwarecomments|linebreaks }}</div>
+			</div>
+			<div class="formTabularRow">
+				<div class="label">Door Accessories:</div><div>{{ estisheet.dooraccessories }}</div><div class="label">Comments:</div><div>{{ estisheet.dooraccessoriescomments|linebreaks }}</div>
+			</div>
+
+		</div>
+	
+	{% endfor %}
+</div>
+
+
+
+
 <div id="div_addProposal" class="page" >
 	{% if perms.esteem.add_proposal %}
 		{% if object.status == object.STATUS_SUBMITTED %}

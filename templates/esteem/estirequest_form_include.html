@@ -107,6 +107,13 @@
 			</div>
 		</div>
 
+		<div id="div_hardware" class="page" style="display:none">
+			<div class="sectionExteriorMillwork">
+			{% include './_formset.html' with formset=estisheethardware formset_name='estisheethardware' formset_template='esteem/hardware_estirequest_form.html' formset_title='Hardware' addable=True  %}
+			</div>
+		</div>
+
+
 		<div id="div_submit" class="page">
 			{% if form.status.value == status_draft %}
 				{% include './_form_buttons.html' with buttons=2 type1="submit" id1="button_draft" caption1="Save Draft" type2="submit" id2="button_submit" caption2="Submit for Proposal" %}
