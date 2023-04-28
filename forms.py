@@ -376,6 +376,7 @@ class EstisheetHardware_EstirequestForm(ModelForm):
             'slidingdoorhardwarecomments',
             'barndoorhardware',
             'barndoorhardwarecomments',
+            'dooraccessories',
             'dooraccessoriescomments',
             'knobs',
             'knobscomments',
