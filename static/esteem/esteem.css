@@ -146,12 +146,21 @@ div.sectionExteriorMillwork div.detailTabularRow {
 	grid-auto-flow:column;
 }
 
+div.sectionHardware div.formTabularRow,
+div.sectionHardware div.detailTabularRow {
+	display:grid;
+	grid-template-columns:1fr 1fr 1fr 2fr;
+	grid-auto-flow:column;
+}
+
 div.sectionInteriorMillwork div.formTabularRow,
 div.sectionInteriorMillwork div.detailTabularRow {
 	display:grid;
 	grid-template-columns:1fr 1fr 1fr 1fr 2fr;
 	grid-auto-flow:column;
 }
+
+
 
 div.formTabularRow > div,
 div.detailTabularRow > div,

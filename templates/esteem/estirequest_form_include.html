@@ -67,6 +67,8 @@
 					{% include './_form_fields.html' with field=form.has_icfs wrapperclass='indent1' %}
 					{% include './_form_fields.html' with field=form.has_interiormillworks wrapperclass='indent1' %}
 					{% include './_form_fields.html' with field=form.has_exteriormillworks wrapperclass='indent1' %}
+					{% include './_form_fields.html' with field=form.has_hardware wrapperclass='indent1' %}
+
 				</div>
 			</div>
 			<div class="sectionCore">
@@ -108,8 +110,8 @@
 		</div>
 
 		<div id="div_hardware" class="page" style="display:none">
-			<div class="sectionExteriorMillwork">
-			{% include './_formset.html' with formset=estisheethardware formset_name='estisheethardware' formset_template='esteem/hardware_estirequest_form.html' formset_title='Hardware' addable=True  %}
+			<div class="sectionHardware">
+			{% include './_formset.html' with formset=estisheethardware formset_name='estisheethardware' formset_template='esteem/estisheethardware_estirequest_form.html' formset_title='Hardware' addable=True  %}
 			</div>
 		</div>
 
@@ -174,6 +176,7 @@ page_names[3]={"name":"door", "plname":"doors","label":"Non-Marvin Doors","chk":
 page_names[4]={"name":"icf", "plname":"icfs","label":"ICF","chk":true};
 page_names[5]={"name":"interiormillwork", "plname":"interiormillworks","label":"Interior Mill Work","chk":true};
 page_names[6]={"name":"exteriormillwork", "plname":"exteriormillworks","label":"Exterior Mill Work","chk":true};
+page_names[7]={"name":"hardware", "plname":"hardware","label":"Hardware","chk":true};
 
 function goto(pageName) {
 

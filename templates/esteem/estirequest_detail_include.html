@@ -44,6 +44,7 @@
 		<input type="checkbox" id="id_has_icfs" {% if object.has_icfs %}checked="True"{% endif %} style="display:none">
 		<input type="checkbox" id="id_has_interiormillworks" {% if object.has_interiormillworks %}checked="True"{% endif %} style="display:none">
 		<input type="checkbox" id="id_has_exteriormillworks" {% if object.has_exteriormillworks %}checked="True"{% endif %} style="display:none">
+		<input type="checkbox" id="id_has_hardware" {% if object.has_hardware %}checked="True"{% endif %} style="display:none">
 
 		<div class="detailFieldWrapper">
 			<div class="detailFieldLabel">
@@ -267,11 +268,11 @@
 	{% endfor %}
 </div>
 
-<div id="div_hardwares" class="page" style="display:none">
+<div id="div_hardware" class="page" style="display:none">
 	<h2>Hardware</h2>
 	{% for estisheet in object.estisheethardware_set.all %}
 		<h3>Emtek</h3>
-		<div class="sectionhardware">
+		<div class="sectionHardware">
 			<div class="formTabularRow">
 				<div class="label">Entry Sets:</div><div>{{ estisheet.entrysets }}</div><div class="label">Comments:</div><div>{{ estisheet.entrysetscomments|linebreaks }}</div>
 			</div>
@@ -344,6 +345,8 @@ page_names[3]={"name":"door", "plname":"doors","label":"Non-Marvin Doors","chk":
 page_names[4]={"name":"icf", "plname":"icfs","label":"ICF","chk":true};
 page_names[5]={"name":"interiormillwork", "plname":"interiormillworks","label":"Interior Mill Work","chk":true};
 page_names[6]={"name":"exteriormillwork", "plname":"exteriormillworks","label":"Exterior Mill Work","chk":true};
+page_names[7]={"name":"hardware", "plname":"hardware","label":"Hardware","chk":true};
+
 at_page = page_names[0].name;
 
 

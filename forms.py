@@ -489,6 +489,7 @@ class EstirequestForm(ModelForm):
             'has_icfs',
             'has_interiormillworks',
             'has_exteriormillworks',
+            'has_hardware',
         ]
         widgets = {
             'customer': Addable(attrs={'data-add_url':reverse_lazy('customer_popup'), 'data-secondaries':''}),

@@ -145,7 +145,7 @@ class Estirequest(models.Model):
     has_icfs = models.BooleanField('icf', default=False, help_text='Does this project have ICF?')
     has_interiormillworks = models.BooleanField('interior millwork', default=False, help_text='Does this project have Interior Millwork?')
     has_exteriormillworks = models.BooleanField('exterior millwork', default=False, help_text='Does this project have Exterior Millwork?')
-
+    has_hardware = models.BooleanField('hardware', default=False, help_text='Does this project have Hardware?')
     class Meta:
         ordering = ('-create_date', '-submit_date', 'name',)
         verbose_name = 'estimate requested'
