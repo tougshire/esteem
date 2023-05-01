@@ -330,29 +330,14 @@ class EstisheetExteriorMillworkForm(ModelForm):
 class EstisheetHardwareForm(ModelForm):
     class Meta:
         model = EstisheetHardware
+
         fields = [
             'estirequest',
-            'entrysets',
-            'entrysetscomments',
-            'electroniclocks',
-            'electroniclockscomments',
-            'deadbolts',
-            'deadboltscomments',
-            'keyedknobs',
-            'keyedknobscomments',
-            'knobs',
-            'knobscomments',
-            'sideplatelocks',
-            'sideplatelockscomments',
-            'slidingdoorhardware',
-            'slidingdoorhardwarecomments',
-            'barndoorhardware',
-            'barndoorhardwarecomments',
-            'dooraccessories',
-            'dooraccessoriescomments',
-            'knobs',
-            'knobscomments',
-
+            'rosettecode',
+            'backset',
+            'handlestyle',
+            'doorthickness',
+            'finish',
         ]
 
 class EstisheetHardware_EstirequestForm(ModelForm):
@@ -360,26 +345,11 @@ class EstisheetHardware_EstirequestForm(ModelForm):
         model = EstisheetHardware
         fields = [
             'estirequest',
-            'entrysets',
-            'entrysetscomments',
-            'electroniclocks',
-            'electroniclockscomments',
-            'deadbolts',
-            'deadboltscomments',
-            'keyedknobs',
-            'keyedknobscomments',
-            'knobs',
-            'knobscomments',
-            'sideplatelocks',
-            'sideplatelockscomments',
-            'slidingdoorhardware',
-            'slidingdoorhardwarecomments',
-            'barndoorhardware',
-            'barndoorhardwarecomments',
-            'dooraccessories',
-            'dooraccessoriescomments',
-            'knobs',
-            'knobscomments',
+            'rosettecode',
+            'backset',
+            'handlestyle',
+            'doorthickness',
+            'finish', 
         ]
 
 class EstisheetExteriorMillwork_EstirequestForm(ModelForm):

@@ -600,7 +600,18 @@ class OptionExteriorMillworkDeckingColor(models.Model):
     class Meta:
         ordering = ('name',)
         verbose_name = 'option exterior millwork decking color'
- 
+
+class OptionHardwareFinish(models.Model):
+    name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'option hardware finish'
+
+
 class EstisheetDoor(models.Model):
 
     NR_NEW='N'
@@ -805,42 +816,19 @@ class EstisheetExteriorMillwork(models.Model):
 class EstisheetHardware(models.Model):
 
     estirequest = models.ForeignKey(Estirequest, help_text='For what request is this sheet?', on_delete=models.CASCADE)
-
-    entrysets = models.IntegerField('entry sets', default=0, help_text='Amount of Entry Sets requested')
-    entrysetscomments  = models.CharField('entry sets comments', blank=True, help_text='Comments regarding entry sets', max_length=255)
-
-    electroniclocks = models.IntegerField('electronic locks', default=0, help_text='Amount of Electronic Locks requested')
-    electroniclockscomments  = models.CharField('electronic locks comments', blank=True, help_text='Comments regarding electronic locks', max_length=255)
-
-    deadbolts = models.IntegerField('deadbolts', default=0, help_text='Amount of Deadbolts requested')
-    deadboltscomments  = models.CharField('deadbolts comments', blank=True, help_text='Comments regarding deadbolts', max_length=255)
-
-    keyedknobs = models.IntegerField('keyed knobs', default=0, help_text='Amount of Keyed Knobs and Levers requested')
-    keyedknobscomments  = models.CharField('keyed knobs comments', blank=True, help_text='Comments regarding keyed knobs', max_length=255)
-
-    knobs = models.IntegerField('non-keyed knobs', default=0, help_text='Amount of non-Keyed Knobs and Levers requested')
-    knobscomments  = models.CharField('non-keyed knobs comments', blank=True, help_text='Comments regarding non-keyed knobs', max_length=255)
-
-    sideplatelocks = models.IntegerField('sideplate locks', default=0, help_text='Amount of Sideplate Locks requested')
-    sideplatelockscomments  = models.CharField('side plate locks comments', blank=True, help_text='Comments regarding side plate locks', max_length=255)
-
-    slidingdoorhardware = models.IntegerField('sliding door hardware', default=0, help_text='Amount of Sliding Door Hardware requested')
-    slidingdoorhardwarecomments  = models.CharField('sliding door hardware comments', blank=True, help_text='Comments regarding sliding door hardware', max_length=255)
-
-    barndoorhardware = models.IntegerField('barn door hardware', default=0, help_text='Amount of Barn Door Hardware sets requested')
-    barndoorhardwarecomments  = models.CharField('bard door hardware comments', blank=True, help_text='Comments regarding barn door hardware', max_length=255)
-
-    dooraccessories = models.IntegerField('door accessories', default=0, help_text='Amount of Door Accessories requested')
-    dooraccessoriescomments  = models.CharField('door accessories comments', blank=True, help_text='Comments regarding door accessories', max_length=255)
-
+    rosettecode  = models.CharField('rosette code', blank=True, help_text='What is the rosette code?', max_length=25)
+    backset  = models.CharField('backset', blank=True, help_text='What is the backset?', max_length=25)
+    handlestyle  = models.CharField('handle style', blank=True, help_text='What is the handle style?', max_length=25)
+    doorthickness  = models.CharField('door thickness', blank=True, help_text='What is the door thickness?', max_length=25)
+    finish  = models.ForeignKey(OptionHardwareFinish, blank=True, help_text='What is the hardware finish?', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return 'Hardware for ' + self.estirequest
 
-
     class Meta:
         ordering = ('estirequest',)
         verbose_name = 'estimate sheet for hardware'
+
 
 class Assignment(models.Model):
     salesperson = models.ForeignKey(Salesperson, on_delete=models.SET_NULL, blank=True, help_text='Who is the salesperson of this project', null=True)
