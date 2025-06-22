@@ -1,10 +1,11 @@
-from django.db import models
-from datetime import date
-from django.utils import timezone
-from datetime import datetime
 import inspect
+from datetime import date, datetime
+
 from django.conf import settings
+from ervin.models import ErvinGroup
+from django.db import models
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 
 YESNO=(
     ('Y','yes'),
@@ -20,6 +21,11 @@ class Estimator(models.Model):
 
     def get_absolute_url(self):
         return reverse('estimator_detail', args=[str(self.id)])
+
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
+        estimators_group = ErvinGroup.objects.get(name='Esteem_Estimators') 
+        self.user.groups.add(estimators_group)
 
     class Meta:
         ordering = ('name',)
@@ -103,6 +109,11 @@ class Salesperson(models.Model):
 
     def get_absolute_url(self):
         return reverse('salesperson_detail', args=[str(self.id)])
+
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
+        sales_group = ErvinGroup.objects.get(name='Esteem_Salespeople') 
+        self.user.groups.add(sales_group)
 
     class Meta:
         ordering = ('name',)
@@ -222,7 +233,7 @@ class Estirequest(models.Model):
                 for assignment in self.assignment_set.all():
                     if user == assignment.salesperson.user:
                         return True
-
+    
 
 class EstirequestDocument(models.Model):
     estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='What is the request to which this document is attached?')
