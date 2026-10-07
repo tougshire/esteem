@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from ervin.models import ErvinGroup
+from ervinhome.models import ErvinGroup
 from django.contrib.auth.models import Group
 
 from django.contrib.auth.models import Permission

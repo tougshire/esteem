@@ -2,7 +2,7 @@ import inspect
 from datetime import date, datetime
 
 from django.conf import settings
-from ervin.models import ErvinGroup
+from ervinhome.models import ErvinGroup
 from django.db import models
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -24,7 +24,7 @@ class Estimator(models.Model):
 
     def save(self,*args,**kwargs):
         super().save(*args,**kwargs)
-        estimators_group = ErvinGroup.objects.get(name='Esteem_Estimators') 
+        estimators_group = ErvinGroup.objects.get(name='Esteem_Estimators')
         self.user.groups.add(estimators_group)
 
     class Meta:
@@ -44,7 +44,7 @@ class Customer(models.Model):
     archived=models.CharField('archived', choices=YESNO, default='N', help_text='Should this customer be removed from the list of active customers?', max_length=1)
     business_card=models.FileField('business card', blank=True, help_text='What is this customer\'s business card?', null=True)
     custom_logo = models.FileField('logo', blank=True, help_text='For salespeople who work for this customer, what logo will be displayed?', null=True)
-    
+
     def __str__(self):
         return self.name
 
@@ -112,7 +112,7 @@ class Salesperson(models.Model):
 
     def save(self,*args,**kwargs):
         super().save(*args,**kwargs)
-        sales_group = ErvinGroup.objects.get(name='Esteem_Salespeople') 
+        sales_group = ErvinGroup.objects.get(name='Esteem_Salespeople')
         self.user.groups.add(sales_group)
 
     class Meta:
@@ -233,7 +233,7 @@ class Estirequest(models.Model):
                 for assignment in self.assignment_set.all():
                     if user == assignment.salesperson.user:
                         return True
-    
+
 
 class EstirequestDocument(models.Model):
     estirequest = models.ForeignKey(Estirequest, on_delete=models.CASCADE, help_text='What is the request to which this document is attached?')
@@ -298,7 +298,7 @@ class OptionDoorHardwareFinish(models.Model):
 class OptionDoorScreen(models.Model):
     optiondoorbrand = models.ForeignKey(OptionDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of screen?')
-    
+
     def __str__(self):
         return self.name
 
@@ -320,7 +320,7 @@ class OptionDoorShade(models.Model):
 class OptionDoorLockSensor(models.Model):
     optiondoorbrand = models.ForeignKey(OptionDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of sensor?')
-    
+
     def __str__(self):
         return self.name
 
@@ -341,7 +341,7 @@ class OptionMarvinDoorBrand(models.Model):
 class OptionMarvinDoorExteriorColor(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this color?')
-    
+
     def __str__(self):
         return self.name
 
@@ -352,7 +352,7 @@ class OptionMarvinDoorExteriorColor(models.Model):
 class OptionMarvinDoorInteriorSpecies(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this species?')
-    
+
     def __str__(self):
         return self.name
 
@@ -363,7 +363,7 @@ class OptionMarvinDoorInteriorSpecies(models.Model):
 class OptionMarvinDoorInteriorFinish(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
-    
+
     def __str__(self):
         return self.name
 
@@ -374,7 +374,7 @@ class OptionMarvinDoorInteriorFinish(models.Model):
 class OptionMarvinDoorHardwareFinish(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
-    
+
     def __str__(self):
         return self.name
 
@@ -385,7 +385,7 @@ class OptionMarvinDoorHardwareFinish(models.Model):
 class OptionMarvinDoorHardwareStyle(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this style?')
-    
+
     def __str__(self):
         return self.name
 
@@ -396,7 +396,7 @@ class OptionMarvinDoorHardwareStyle(models.Model):
 class OptionMarvinDoorScreen(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of screen?')
-    
+
     def __str__(self):
         return self.name
 
@@ -407,7 +407,7 @@ class OptionMarvinDoorScreen(models.Model):
 class OptionMarvinDoorShade(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of shade?')
-    
+
     def __str__(self):
         return self.name
 
@@ -418,7 +418,7 @@ class OptionMarvinDoorShade(models.Model):
 class OptionMarvinDoorLockSensor(models.Model):
     optionmarvindoorbrand = models.ForeignKey(OptionMarvinDoorBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of sensor?')
-    
+
     def __str__(self):
         return self.name
 
@@ -439,7 +439,7 @@ class OptionWindowBrand(models.Model):
 class OptionWindowExteriorColor(models.Model):
     optionwindowbrand = models.ForeignKey(OptionWindowBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this color?')
-    
+
     def __str__(self):
         return self.name
 
@@ -450,7 +450,7 @@ class OptionWindowExteriorColor(models.Model):
 class OptionWindowInteriorFinish(models.Model):
     optionwindowbrand = models.ForeignKey(OptionWindowBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
-    
+
     def __str__(self):
         return self.name
 
@@ -462,7 +462,7 @@ class OptionWindowInteriorFinish(models.Model):
 class OptionWindowInteriorSpecies(models.Model):
     optionwindowbrand = models.ForeignKey(OptionWindowBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
-    
+
     def __str__(self):
         return self.name
 
@@ -474,7 +474,7 @@ class OptionWindowInteriorSpecies(models.Model):
 class OptionWindowHardwareFinish(models.Model):
     optionwindowbrand = models.ForeignKey(OptionWindowBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this finish?')
-    
+
     def __str__(self):
         return self.name
 
@@ -486,7 +486,7 @@ class OptionWindowHardwareFinish(models.Model):
 class OptionWindowScreen(models.Model):
     optionwindowbrand = models.ForeignKey(OptionWindowBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of screen?')
-    
+
     def __str__(self):
         return self.name
 
@@ -497,7 +497,7 @@ class OptionWindowScreen(models.Model):
 class OptionWindowShade(models.Model):
     optionwindowbrand = models.ForeignKey(OptionWindowBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of shade?')
-    
+
     def __str__(self):
         return self.name
 
@@ -509,7 +509,7 @@ class OptionWindowShade(models.Model):
 class OptionWindowLockSensor(models.Model):
     optionwindowbrand = models.ForeignKey(OptionWindowBrand, blank=True, help_text='What is the brand to which this options applies?', null=True, on_delete=models.PROTECT)
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this type of sensor?')
-    
+
     def __str__(self):
         return self.name
 
@@ -547,7 +547,7 @@ class OptionInteriorMillworkTreadSpecies(models.Model):
     class Meta:
         ordering = ('name',)
         verbose_name = 'option interior millwork tread species'
-        
+
 
 class OptionInteriorMillworkRiserSpecies(models.Model):
     name = models.CharField('name', max_length=200, blank=True, help_text='What is the name of this species?')
@@ -648,7 +648,7 @@ class EstisheetDoor(models.Model):
     comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?')
 
     def __str__(self):
-        return 'Non-Marvin Doors for ' + self.estirequest 
+        return 'Non-Marvin Doors for ' + self.estirequest
 
     class Meta:
         ordering = ('estirequest',)
@@ -725,7 +725,7 @@ class EstisheetICF(models.Model):
     optionbgmembrane = models.CharField('below grade membrane', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include below grade membrane?', null=True)
     optionslabinsulation = models.CharField('slab on grade insullation', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include slab on grade insullation?', null=True)
     optionfloor = models.CharField('ICF floor system', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include an ICF floor system?', null=True)
-    optionroof = models.CharField('ICF roof system', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include an ICF roof system?', null=True) 
+    optionroof = models.CharField('ICF roof system', max_length=1, choices=YESNO, default='N', help_text='Does this estimate include an ICF roof system?', null=True)
     comments = models.TextField('comments', blank=True, help_text='What are comments for this estimate?')
 
     def __str__(self):
@@ -938,7 +938,7 @@ class ProposalDocument(models.Model):
         verbose_name = 'proposal document'
 
 class QueryEstirequest(models.Model):
-    user = models.ForeignKey( settings.AUTH_USER_MODEL, verbose_name='user', on_delete=models.SET_NULL, help_text='who is the user associated with the setting', null=True, blank=True, related_name='estirequest_query', ) 
+    user = models.ForeignKey( settings.AUTH_USER_MODEL, verbose_name='user', on_delete=models.SET_NULL, help_text='who is the user associated with the setting', null=True, blank=True, related_name='estirequest_query', )
     query_name = models.CharField( 'query name', max_length=50,  blank=True, help_text='The name of this query')
     latest_use = models.DateTimeField('last used', auto_now=True, help_text='The most recent use of this query')
 
@@ -972,7 +972,7 @@ class QueryEstirequest(models.Model):
 
                 if display_string > '':
                     display_string =display_string + ', '
-                
+
                 field = self._meta.get_field(fieldname + '_value')
                 print(inspect.currentframe().f_lineno)
                 print(type(field).__name__)
